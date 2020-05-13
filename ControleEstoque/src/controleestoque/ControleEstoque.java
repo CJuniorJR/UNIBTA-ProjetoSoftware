@@ -5,8 +5,6 @@
  */
 package controleestoque;
 
-import controleestoque.Models;
-
 /**
  *
  * @author sedden
@@ -17,9 +15,6 @@ public class ControleEstoque {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        ProdutoVenda produto = new ProdutoVenda();
-        
-        Produto prod;
     }
     
 }
