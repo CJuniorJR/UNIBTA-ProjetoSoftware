@@ -13,8 +13,8 @@ public class Produto {
     private int ID;
     private String Descricao;
     private double Preco;
-    private int IdCategoria;
-    private int IdTipoProduto;
+    private Categoria Categoria;
+    private TipoProduto TipoProduto;
     private int Quantidade;
     private String Nome;
     
@@ -42,21 +42,22 @@ public class Produto {
         this.Preco = Preco;
     }
 
-    public int getIdCategoria() {
-        return this.IdCategoria;
+    public Categoria getCategoria() {
+        return Categoria;
     }
 
-    public void setIdCategoria(int IdCategoria) {
-        this.IdCategoria = IdCategoria;
+    public void setCategoria(Categoria Categoria) {
+        this.Categoria = Categoria;
     }
 
-    public int getIdTipoProduto() {
-        return this.IdTipoProduto;
+    public TipoProduto getTipoProduto() {
+        return TipoProduto;
     }
 
-    public void setIdTipoProduto(int IdTipoProduto) {
-        this.IdTipoProduto = IdTipoProduto;
+    public void setTipoProduto(TipoProduto TipoProduto) {
+        this.TipoProduto = TipoProduto;
     }
+
 
     public int getQuantidade() {
         return this.Quantidade;
