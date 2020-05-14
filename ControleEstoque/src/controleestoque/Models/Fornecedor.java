@@ -12,6 +12,15 @@ package controleestoque.Models;
 public class Fornecedor extends Endereco {
     private int ID;
     private String Nome;
+    private String Email;
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String Email) {
+        this.Email = Email;
+    }
     private String Cnpj;
 
     public int getID() {
