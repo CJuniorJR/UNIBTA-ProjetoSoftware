@@ -9,10 +9,9 @@ package controleestoque.Models;
  *
  * @author Rogério
  */
-public class Cliente extends Endereco {
+public class Cliente extends Pessoa {
      private int ID;
      private Venda Venda;
-     private String Nome;
      
      
     public int getID() {
@@ -30,14 +29,4 @@ public class Cliente extends Endereco {
     public void setVenda(Venda Venda) {
         this.Venda = Venda;
     }
-     
-       public String getNome() {
-        return Nome;
-    }
-
-    public void setNome(String Nome) {
-        this.Nome = Nome;
-    }
-     
-           
 }
