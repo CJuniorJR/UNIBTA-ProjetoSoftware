@@ -28,16 +28,16 @@ public void setID(int ID) {
         this.ID = ID;
   }
   
-      public ProdutoVenda ProdutoVenda() {
+      public ProdutoVenda getProdutoVenda() {
         return this.ProdutoVenda;
     }
 
-  public void ProdutoVenda(ProdutoVenda ProdutoVenda) {
+  public void setProdutoVenda(ProdutoVenda ProdutoVenda) {
         this.ProdutoVenda = ProdutoVenda;
     }
      
   
-   public double Total() {
+   public double getTotal() {
         return this.Total;
     }
 
@@ -46,11 +46,11 @@ public void setID(int ID) {
     } 
     
     
-       public Cliente Cliente() {
+       public Cliente getCliente() {
         return this.Cliente;
     }      
 
-  public void Cliente(Cliente Cliente) {
+  public void setCliente(Cliente Cliente) {
         this.Cliente = Cliente;
     }  
   
@@ -64,7 +64,7 @@ public void setID(int ID) {
     }
     
     
-       public String FormaPagamento() {
+       public String getFormaPagamento() {
         return this.FormaPagamento;
     }
 
@@ -72,7 +72,7 @@ public void setID(int ID) {
         this.FormaPagamento = FormaPagamento;
     } 
     
-     public String Data() {
+     public String getData() {
         return this.Data;
     }
 
