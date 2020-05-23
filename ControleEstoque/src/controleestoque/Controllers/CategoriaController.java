@@ -6,7 +6,6 @@
 package controleestoque.Controllers;
 
 import java.sql.Connection;
-import controleestoque.Models.Categoria;
 
 /**
  *
