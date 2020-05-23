@@ -11,8 +11,8 @@ package controleestoque.Models;
  */
 public class Funcionario extends Pessoa {
     private int ID;
-    private String Senha;
     private String Email;
+    private String Senha;
 
     public int getID() {
         return this.ID;

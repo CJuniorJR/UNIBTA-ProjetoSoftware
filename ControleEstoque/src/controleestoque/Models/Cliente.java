@@ -11,6 +11,7 @@ package controleestoque.Models;
  */
 public class Cliente extends Pessoa {
      private int ID;
+     private String Email;
      private Venda Venda;
      
      
@@ -22,11 +23,4 @@ public class Cliente extends Pessoa {
         this.ID = ID;
     } 
     
-     public Venda getVenda() {
-        return this.Venda;
-    }
-
-    public void setVenda(Venda Venda) {
-        this.Venda = Venda;
-    }
 }
