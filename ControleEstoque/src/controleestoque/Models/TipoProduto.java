@@ -13,4 +13,21 @@ public class TipoProduto {
     private int ID;
     private String Descricao;
 //TODO    
+    
+    TipoProduto(int id, String descricao) {
+        this.ID = id;
+        this.Descricao = descricao;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public String getDescricao() {
+        return Descricao;
+    }
+
+    public void setDescricao(String Descricao) {
+        this.Descricao = Descricao;
+    }
 }

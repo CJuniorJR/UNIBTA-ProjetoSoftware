@@ -4,18 +4,46 @@
  * and open the template in the editor.
  */
 package controleestoque.Views;
-
+import controleestoque.Controllers.CategoriaController;
+import controleestoque.Models.Categoria;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author guilhermemarques
  */
 public class CategoriaView extends javax.swing.JFrame {
-
+    CategoriaController controller = new CategoriaController();
     /**
      * Creates new form CategoriaView
      */
     public CategoriaView() {
         initComponents();
+    }
+    
+    public void ConstularCategorias() {
+        ArrayList<Categoria> categorias = new ArrayList<Categoria>();
+        DefaultTableModel model =(DefaultTableModel) tblCategoria.getModel();
+        model.setNumRows(0);
+        
+        try {
+            categorias.addAll(controller.Consultar());
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoriaView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        for(int i = 0; i < categorias.size(); i++) {
+            model.addRow(new Object[] 
+            { 
+               //retorna os dados da tabela do BD, cada campo e um coluna.
+               categorias.get(i).getID(),
+               categorias.get(i).getDescricao()
+            });
+        }
     }
 
     /**
@@ -28,35 +56,63 @@ public class CategoriaView extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblCategoria = new javax.swing.JTable();
         btnEditar = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        btnExcluir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblCategoria.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Title 1"
+                "ID", "Categoria"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblCategoria);
 
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
-        btnSalvar.setText("Salvar");
+        btnSalvar.setText("Cadastrar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         btnVoltar.setText("Voltar");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabel1.setText("CATEGORIA");
+
+        btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -65,14 +121,15 @@ public class CategoriaView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnEditar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSalvar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnVoltar)
-                        .addGap(0, 128, Short.MAX_VALUE)))
+                        .addGap(31, 31, 31)
+                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(116, 116, 116)
@@ -88,15 +145,60 @@ public class CategoriaView extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEditar)
                     .addComponent(btnSalvar)
-                    .addComponent(btnVoltar))
+                    .addComponent(btnEditar)
+                    .addComponent(btnVoltar)
+                    .addComponent(btnExcluir))
                 .addGap(59, 59, 59))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_btnVoltarActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        FormCategoriaView formCategoria = new FormCategoriaView(this);
+        formCategoria.setVisible(true);
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        int linha = tblCategoria.getSelectedRow();
+        
+        Categoria categoria = new Categoria(
+                Integer.parseInt(tblCategoria.getValueAt(linha, 0).toString()),
+                tblCategoria.getValueAt(linha, 1).toString()
+        );
+        
+        FormCategoriaView formCategoria = new FormCategoriaView(categoria, this);
+        
+        formCategoria.setVisible(true);
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        this.ConstularCategorias();
+    }//GEN-LAST:event_formWindowOpened
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        int linha = tblCategoria.getSelectedRow();
+        
+        Categoria categoria = new Categoria(
+                Integer.parseInt(tblCategoria.getValueAt(linha, 0).toString()), 
+                tblCategoria.getValueAt(linha, 1).toString()
+        );
+        
+        try {
+            controller.Excluir(categoria);
+            this.ConstularCategorias();
+        } catch (SQLException ex) {
+            Logger.getLogger(CategoriaView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -134,10 +236,11 @@ public class CategoriaView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblCategoria;
     // End of variables declaration//GEN-END:variables
 }

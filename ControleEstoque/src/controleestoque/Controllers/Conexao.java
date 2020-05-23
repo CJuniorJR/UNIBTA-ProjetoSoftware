@@ -30,7 +30,7 @@ public class Conexao {
  
     //Método de Conexão//
 
-    public java.sql.Connection getConexaoMySQL() {
+    public static java.sql.Connection getConexaoMySQL() {
 
         Connection connection = null;          //atributo do tipo Connection
 
@@ -109,10 +109,10 @@ public class Conexao {
  
    //Método que fecha sua conexão//
  
-    public boolean FecharConexao() {
+    public static boolean FecharConexao() {
  
         try {
-            this.getConexaoMySQL().close();
+            getConexaoMySQL().close();
  
             return true;
  

@@ -12,13 +12,18 @@ package controleestoque.Models;
 public class Categoria {
     private int ID;
     private String Descricao;
+    
+    public Categoria(String descricao) {
+        this.Descricao = descricao;
+    }
+    
+    public Categoria(int id, String descricao) {
+        this.ID = id;
+        this.Descricao = descricao;
+    }
    
     public int getID() {
         return this.ID;
-    }
-    
-    public void setID(int id) {
-        this.ID = id;
     }
     
     public String getDescricao() {
