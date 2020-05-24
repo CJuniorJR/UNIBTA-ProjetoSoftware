@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package controleestoque.Views;
+import controleestoque.Views.CategoriaView;
 import controleestoque.Models.Categoria;
 import controleestoque.Controllers.CategoriaController;
 import java.sql.SQLException;
@@ -119,13 +120,13 @@ public class FormCategoriaView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(lblCategoria)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
                     .addComponent(btnEditar)
                     .addComponent(btnCancelar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
