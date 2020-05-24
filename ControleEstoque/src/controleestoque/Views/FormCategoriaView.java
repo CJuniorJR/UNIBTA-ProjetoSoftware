@@ -19,19 +19,19 @@ public class FormCategoriaView extends javax.swing.JFrame {
     CategoriaController controller = new CategoriaController();
     Categoria categoria = null;
     CategoriaView categoriaView;
+    boolean isEditing = false;
     /**
      * Creates new form CategoriaView
      */
     public FormCategoriaView() {
         initComponents();
-        btnEditar.setVisible(false);
     }
     
     //Contrutor para salvar uma categoria
     public FormCategoriaView(CategoriaView categoriaView) {
         initComponents();
-        btnEditar.setVisible(false);
         this.categoriaView = categoriaView;
+        label.setText("Cadastrar Categoria");
     }
     
     //Construtor para editar uma categoria
@@ -39,8 +39,8 @@ public class FormCategoriaView extends javax.swing.JFrame {
         initComponents();
         this.categoriaView = categoriaView;
         this.categoria = categoria;
-        btnEditar.setVisible(true);
-        btnSalvar.setEnabled(false);
+        this.isEditing = true;
+        label.setText("Editar Categoria");
     }
 
     /**
@@ -56,7 +56,7 @@ public class FormCategoriaView extends javax.swing.JFrame {
         lblCategoria = new javax.swing.JLabel();
         btnSalvar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        btnEditar = new javax.swing.JButton();
+        label = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -88,12 +88,8 @@ public class FormCategoriaView extends javax.swing.JFrame {
             }
         });
 
-        btnEditar.setText("Editar");
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
-            }
-        });
+        label.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        label.setText("Cadastrar Categoria");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -104,29 +100,32 @@ public class FormCategoriaView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCancelar))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblCategoria)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(txtCategoria))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(104, Short.MAX_VALUE)
+                .addComponent(label)
+                .addGap(103, 103, 103))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblCategoria)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
-                    .addComponent(btnEditar)
                     .addComponent(btnCancelar))
-                .addContainerGap())
+                .addGap(22, 22, 22))
         );
 
         pack();
@@ -139,14 +138,30 @@ public class FormCategoriaView extends javax.swing.JFrame {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         Categoria categoria = new Categoria(txtCategoria.getText());
         
-        try {
-            controller.Salvar(categoria);
+        if(!isEditing) {
+            try {
+                controller.Salvar(categoria);
+
+                this.setVisible(false); 
+
+                categoriaView.ConstularCategorias();
+            } catch (SQLException ex) {
+                Logger.getLogger(FormCategoriaView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            this.categoria.setDescricao(txtCategoria.getText());
             
-            this.setVisible(false); 
-            
-            categoriaView.ConstularCategorias();
-        } catch (SQLException ex) {
-            Logger.getLogger(FormCategoriaView.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                controller.Editar(this.categoria);
+
+                this.setVisible(false); 
+                
+                this.isEditing = false;
+
+                categoriaView.ConstularCategorias();
+            } catch (SQLException ex) {
+                Logger.getLogger(FormCategoriaView.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -159,20 +174,6 @@ public class FormCategoriaView extends javax.swing.JFrame {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_btnCancelarActionPerformed
-
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        this.categoria.setDescricao(txtCategoria.getText());
-        
-        try {
-            controller.Editar(categoria);
-            
-            this.setVisible(false); 
-            
-            categoriaView.ConstularCategorias();
-        } catch (SQLException ex) {
-            Logger.getLogger(FormCategoriaView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -214,8 +215,8 @@ public class FormCategoriaView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnSalvar;
+    private javax.swing.JLabel label;
     private javax.swing.JLabel lblCategoria;
     private javax.swing.JTextField txtCategoria;
     // End of variables declaration//GEN-END:variables

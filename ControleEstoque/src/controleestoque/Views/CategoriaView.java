@@ -105,7 +105,7 @@ public class CategoriaView extends javax.swing.JFrame {
         });
 
         lblCategoria.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        lblCategoria.setText("CATEGORIA");
+        lblCategoria.setText("CATEGORIAS");
 
         btnExcluir.setText("Excluir");
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -131,10 +131,10 @@ public class CategoriaView extends javax.swing.JFrame {
                         .addGap(29, 29, 29)
                         .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(116, 116, 116)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblCategoria)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(141, 141, 141))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
