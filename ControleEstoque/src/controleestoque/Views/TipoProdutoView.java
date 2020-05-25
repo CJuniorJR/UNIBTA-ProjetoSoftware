@@ -4,8 +4,8 @@
  * and open the template in the editor.
  */
 package controleestoque.Views;
-import controleestoque.Controllers.CategoriaController;
-import controleestoque.Models.Categoria;
+import controleestoque.Controllers.TipoController;
+import controleestoque.Models.TipoProduto;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -16,36 +16,37 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author guilhermemarques
  */
-public class CategoriaView extends javax.swing.JFrame {
-    CategoriaController controller = new CategoriaController();
+public class TipoProdutoView extends javax.swing.JFrame {
+    TipoController controller = new TipoController();
+
     /**
-     * Creates new form CategoriaView
+     * Creates new form TipoProdutoView
      */
-    public CategoriaView() {
+    public TipoProdutoView() {
         initComponents();
     }
-    
-    public void ConsultarCategorias() {
-        ArrayList<Categoria> categorias = new ArrayList<Categoria>();
-        DefaultTableModel model =(DefaultTableModel) tblCategoria.getModel();
+
+    public void ConsultarTipos() {
+        ArrayList<TipoProduto> tipos = new ArrayList<TipoProduto>();
+        DefaultTableModel model =(DefaultTableModel) tblTipoProduto.getModel();
         model.setNumRows(0);
         
         try {
-            categorias.addAll(controller.Consultar());
+            tipos.addAll(controller.Consultar());
         } catch (SQLException ex) {
-            Logger.getLogger(CategoriaView.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TipoProdutoView.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        for(int i = 0; i < categorias.size(); i++) {
+        for(int i = 0; i < tipos.size(); i++) {
             model.addRow(new Object[] 
             { 
                //retorna os dados da tabela do BD, cada campo e um coluna.
-               categorias.get(i).getID(),
-               categorias.get(i).getDescricao()
+               tipos.get(i).getID(),
+               tipos.get(i).getDescricao()
             });
         }
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -55,13 +56,13 @@ public class CategoriaView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblCategoria = new javax.swing.JTable();
         btnEditar = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
-        lblCategoria = new javax.swing.JLabel();
+        lblTipo = new javax.swing.JLabel();
         btnExcluir = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblTipoProduto = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -69,19 +70,6 @@ public class CategoriaView extends javax.swing.JFrame {
                 formWindowOpened(evt);
             }
         });
-
-        tblCategoria.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "ID", "Categoria"
-            }
-        ));
-        jScrollPane1.setViewportView(tblCategoria);
 
         btnEditar.setText("Editar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -104,8 +92,8 @@ public class CategoriaView extends javax.swing.JFrame {
             }
         });
 
-        lblCategoria.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        lblCategoria.setText("CATEGORIAS");
+        lblTipo.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        lblTipo.setText("TIPOS");
 
         btnExcluir.setText("Excluir");
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -114,6 +102,19 @@ public class CategoriaView extends javax.swing.JFrame {
             }
         });
 
+        tblTipoProduto.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "ID", "Tipo"
+            }
+        ));
+        jScrollPane1.setViewportView(tblTipoProduto);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -121,7 +122,7 @@ public class CategoriaView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnSalvar)
                         .addGap(31, 31, 31)
@@ -131,17 +132,17 @@ public class CategoriaView extends javax.swing.JFrame {
                         .addGap(29, 29, 29)
                         .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblCategoria)
-                .addGap(141, 141, 141))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(167, 167, 167)
+                .addComponent(lblTipo)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblCategoria)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addComponent(lblTipo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -155,50 +156,48 @@ public class CategoriaView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        int linha = tblTipoProduto.getSelectedRow();
+
+        TipoProduto tipoProduto = new TipoProduto(
+            Integer.parseInt(tblTipoProduto.getValueAt(linha, 0).toString()),
+            tblTipoProduto.getValueAt(linha, 1).toString()
+        );
+
+        FormTipoProdutoView formTipoProduto = new FormTipoProdutoView(tipoProduto, this);
+
+        formTipoProduto.setVisible(true);
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        FormTipoProdutoView formTipoProduto = new FormTipoProdutoView(this);
+        formTipoProduto.setVisible(true);
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_btnVoltarActionPerformed
 
-    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        FormCategoriaView formCategoria = new FormCategoriaView(this);
-        formCategoria.setVisible(true);
-    }//GEN-LAST:event_btnSalvarActionPerformed
-
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        int linha = tblCategoria.getSelectedRow();
-        
-        Categoria categoria = new Categoria(
-                Integer.parseInt(tblCategoria.getValueAt(linha, 0).toString()),
-                tblCategoria.getValueAt(linha, 1).toString()
-        );
-        
-        FormCategoriaView formCategoria = new FormCategoriaView(categoria, this);
-        
-        formCategoria.setVisible(true);
-    }//GEN-LAST:event_btnEditarActionPerformed
-
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        this.ConsultarCategorias();
-    }//GEN-LAST:event_formWindowOpened
-
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        int linha = tblCategoria.getSelectedRow();
-        
-        Categoria categoria = new Categoria(
-                Integer.parseInt(tblCategoria.getValueAt(linha, 0).toString()), 
-                tblCategoria.getValueAt(linha, 1).toString()
+        int linha = tblTipoProduto.getSelectedRow();
+
+        TipoProduto tipoProduto = new TipoProduto(
+            Integer.parseInt(tblTipoProduto.getValueAt(linha, 0).toString()),
+            tblTipoProduto.getValueAt(linha, 1).toString()
         );
-        
+
         try {
-            controller.Excluir(categoria);
-            this.ConsultarCategorias();
+            controller.Excluir(tipoProduto);
+            this.ConsultarTipos();
         } catch (SQLException ex) {
-            Logger.getLogger(CategoriaView.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TipoProdutoView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
-    
-    
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        this.ConsultarTipos();
+    }//GEN-LAST:event_formWindowOpened
+
     /**
      * @param args the command line arguments
      */
@@ -216,20 +215,20 @@ public class CategoriaView extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CategoriaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TipoProdutoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CategoriaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TipoProdutoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CategoriaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TipoProdutoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CategoriaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TipoProdutoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CategoriaView().setVisible(true);
+                new TipoProdutoView().setVisible(true);
             }
         });
     }
@@ -240,7 +239,7 @@ public class CategoriaView extends javax.swing.JFrame {
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblCategoria;
-    private javax.swing.JTable tblCategoria;
+    private javax.swing.JLabel lblTipo;
+    private javax.swing.JTable tblTipoProduto;
     // End of variables declaration//GEN-END:variables
 }

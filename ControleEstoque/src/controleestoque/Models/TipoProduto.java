@@ -14,7 +14,11 @@ public class TipoProduto {
     private String Descricao;
 //TODO    
     
-    TipoProduto(int id, String descricao) {
+    public TipoProduto(String descricao) {
+        this.Descricao = descricao;
+    }
+    
+    public TipoProduto(int id, String descricao) {
         this.ID = id;
         this.Descricao = descricao;
     }
