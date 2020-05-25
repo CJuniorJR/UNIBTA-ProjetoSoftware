@@ -5,14 +5,16 @@
  */
 package controleestoque.Models;
 
+
 /**
  *
  * @author guilhermemarques
  */
 public class Pessoa extends Endereco {
-    private String Nome;
+    private static String Nome;
     private String Rg;
     private String Cpf;
+    private String DataNascimento;
 
     public String getNome() {
         return this.Nome;
@@ -38,6 +40,12 @@ public class Pessoa extends Endereco {
         this.Cpf = Cpf;
     }
     
+    public String getDataNascimento() {
+        return this.DataNascimento;
+    }
     
+    public void setDataNascimento(String DataNascimento) {
+        this.DataNascimento = DataNascimento;
+    }
     
 }
