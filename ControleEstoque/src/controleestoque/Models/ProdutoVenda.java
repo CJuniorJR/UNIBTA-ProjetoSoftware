@@ -11,6 +11,7 @@ package controleestoque.Models;
  */
 public class ProdutoVenda {
     private int ID;
+    private Venda Venda;
     private Produto Produto;
     private int Quantidade;
     private double Total;
@@ -21,6 +22,14 @@ public class ProdutoVenda {
 
     public void setID(int ID) {
         this.ID = ID;
+    }
+    
+    public Venda getVenda() {
+        return Venda;
+    }
+
+    public void setVenda(Venda Venda) {
+        this.Venda = Venda;
     }
     
     public Produto getProduto() {

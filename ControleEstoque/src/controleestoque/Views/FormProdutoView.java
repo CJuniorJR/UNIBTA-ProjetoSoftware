@@ -4,6 +4,17 @@
  * and open the template in the editor.
  */
 package controleestoque.Views;
+import controleestoque.Controllers.CategoriaController;
+import controleestoque.Controllers.TipoController;
+import controleestoque.Models.Categoria;
+import controleestoque.Models.TipoProduto;
+import controleestoque.Views.CategoriaView;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -73,12 +84,22 @@ public class FormProdutoView extends javax.swing.JFrame {
         });
 
         btnCategoria.setText("+");
+        btnCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCategoriaActionPerformed(evt);
+            }
+        });
 
         lblTipo.setText("Tipo");
 
         dpdTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnTipo.setText("+");
+        btnTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTipoActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Produto");
 
@@ -168,6 +189,16 @@ public class FormProdutoView extends javax.swing.JFrame {
     private void dpdCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dpdCategoriaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_dpdCategoriaActionPerformed
+
+    private void btnCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriaActionPerformed
+        FormCategoriaView formCategoria = new FormCategoriaView();
+        formCategoria.setVisible(true);
+    }//GEN-LAST:event_btnCategoriaActionPerformed
+
+    private void btnTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTipoActionPerformed
+        FormTipoProdutoView formTipoProduto = new FormTipoProdutoView();
+        formTipoProduto.setVisible(true);
+    }//GEN-LAST:event_btnTipoActionPerformed
 
     /**
      * @param args the command line arguments
