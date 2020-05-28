@@ -11,7 +11,7 @@ package controleestoque.Models;
  * @author guilhermemarques
  */
 public class Pessoa extends Endereco {
-    private static String Nome;
+    private String Nome;
     private String Rg;
     private String Cpf;
     private String DataNascimento;

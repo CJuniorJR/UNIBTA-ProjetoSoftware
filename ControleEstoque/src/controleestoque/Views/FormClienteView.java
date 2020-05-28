@@ -20,11 +20,29 @@ import javax.swing.text.MaskFormatter;
  */
 public class FormClienteView extends javax.swing.JFrame {
     ClienteController controller = new ClienteController();
+    ClienteView clienteView;
+    Cliente clienteEdit = null;
+    boolean isEditing = false;
     /**
      * Creates new form FormClienteView
      */
     public FormClienteView() {
         initComponents();
+    }
+    
+    //Contrutor para salvar um cliente
+    public FormClienteView(ClienteView clienteView) {
+        initComponents();
+        this.clienteView = clienteView;
+    }
+
+    //Construtor para editar um cliente
+    public FormClienteView(Cliente cliente, ClienteView clienteView) {
+        initComponents();
+        this.clienteView = clienteView;
+        this.clienteEdit = cliente;
+        this.isEditing = true;
+        //label.setText("Editar Categoria");
     }
 
     /**
@@ -86,7 +104,12 @@ public class FormClienteView extends javax.swing.JFrame {
             }
         });
 
-        btnEditar.setText("Editar");
+        btnEditar.setText("Voltar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Cadastrar Cliente");
 
@@ -106,14 +129,14 @@ public class FormClienteView extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(139, 139, 139))
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(txtLogradouro, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,11 +144,8 @@ public class FormClienteView extends javax.swing.JFrame {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(txtCEP, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
                                 .addComponent(txtBairro))
-                            .addComponent(jLabel6))))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6))
+                        .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -240,31 +260,83 @@ public class FormClienteView extends javax.swing.JFrame {
         }
     }
     
+    public void VerificarClienteCarregado() {
+        if(this.clienteEdit != null) {
+            txtNome.setText(this.clienteEdit.getNome());
+            txtRG.setText(this.clienteEdit.getRg());
+            txtCPF.setText(this.clienteEdit.getCpf());
+            txtEmail.setText(this.clienteEdit.getEmail());
+            txtLogradouro.setText(this.clienteEdit.getLogradouro());
+            txtCEP.setText(this.clienteEdit.getCep());
+            txtCidade.setText(this.clienteEdit.getCidade());
+            txtBairro.setText(this.clienteEdit.getBairro());
+            txtNumero.setText(this.clienteEdit.getNumero());
+            txtDataNascimento.setText(this.clienteEdit.getDataNascimento());
+            txtRua.setText(this.clienteEdit.getRua());
+        }
+    }
+    
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         Cliente cliente = new Cliente();
         
-        cliente.setEmail(txtEmail.getText());
-        cliente.setBairro(txtBairro.getText());
-        cliente.setCep(txtCEP.getText());
-        cliente.setCidade(txtCidade.getText());
-        cliente.setCpf(txtCPF.getText());
-        cliente.setDataNascimento(txtDataNascimento.getText());
-        cliente.setLogradouro(txtLogradouro.getText());
-        cliente.setNome(txtNome.getText());
-        cliente.setNumero(txtNumero.getText());
-        cliente.setRg(txtRG.getText());
-        cliente.setRua(txtRua.getText());
-        
-        try {
-            controller.Salvar(cliente);
-        } catch (SQLException ex) {
-            Logger.getLogger(FormCategoriaView.class.getName()).log(Level.SEVERE, null, ex);
+        if(!isEditing) {
+            cliente.setEmail(txtEmail.getText());
+            cliente.setBairro(txtBairro.getText());
+            cliente.setCep(txtCEP.getText());
+            cliente.setCidade(txtCidade.getText());
+            cliente.setCpf(txtCPF.getText());
+            cliente.setDataNascimento(txtDataNascimento.getText());
+            cliente.setLogradouro(txtLogradouro.getText());
+            cliente.setNome(txtNome.getText());
+            cliente.setNumero(txtNumero.getText());
+            cliente.setRg(txtRG.getText());
+            cliente.setRua(txtRua.getText());
+
+            try {
+                controller.Salvar(cliente);
+                
+                this.setVisible(false);
+                
+                clienteView.ConsultarClientes();
+            } catch (SQLException ex) {
+                Logger.getLogger(FormCategoriaView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            this.clienteEdit.setEmail(txtEmail.getText());
+            this.clienteEdit.setBairro(txtBairro.getText());
+            this.clienteEdit.setCep(txtCEP.getText());
+            this.clienteEdit.setCidade(txtCidade.getText());
+            this.clienteEdit.setCpf(txtCPF.getText());
+            this.clienteEdit.setDataNascimento(txtDataNascimento.getText());
+            this.clienteEdit.setLogradouro(txtLogradouro.getText());
+            this.clienteEdit.setNome(txtNome.getText());
+            this.clienteEdit.setNumero(txtNumero.getText());
+            this.clienteEdit.setRg(txtRG.getText());
+            this.clienteEdit.setRua(txtRua.getText());
+
+            try {
+                controller.Editar(this.clienteEdit);
+                
+                this.setVisible(false);
+                
+                clienteView.ConsultarClientes();
+                
+                this.isEditing = false;
+            } catch (SQLException ex) {
+                Logger.getLogger(FormCategoriaView.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+        
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         FormatarCampos();
+        VerificarClienteCarregado();
     }//GEN-LAST:event_formWindowOpened
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
      * @param args the command line arguments

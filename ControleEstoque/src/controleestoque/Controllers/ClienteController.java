@@ -73,4 +73,88 @@ public class ClienteController {
         Conexao.FecharConexao();
        return clientes;
    }
+    
+    public Cliente Consultar(int idCliente) throws SQLException {
+        String sql = "SELECT * from tbCliente WHERE IdCliente=?;";
+        
+        conn = Conexao.getConexaoMySQL();
+        
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setInt(1, idCliente);
+        
+        ResultSet result = statement.executeQuery();
+        Cliente cliente = new Cliente();
+        while (result.next()){
+            cliente.setID(result.getInt("IdCliente"));
+            cliente.setEmail(result.getString("Email"));
+            cliente.setNome(result.getString("Nome"));
+            cliente.setRg(result.getString("RG"));
+            cliente.setCpf(result.getString("Cpf"));
+            cliente.setDataNascimento(result.getString("DataNascimento"));
+            cliente.setRua(result.getString("Rua"));
+            cliente.setLogradouro(result.getString("Logradouro"));
+            cliente.setCep(result.getString("Cep"));
+            cliente.setNumero(result.getString("Numero"));
+            cliente.setBairro(result.getString("Bairro"));
+            cliente.setCidade(result.getString("Cidade"));
+        }
+        
+        Conexao.FecharConexao();
+       return cliente;
+    }
+    
+    public void Editar(Cliente cliente) throws SQLException {
+       String sql = "UPDATE tbCliente SET "
+               + "Nome=?, "
+               + "RG=?, "
+               + "Cpf=?, "
+               + "DataNascimento=?, "
+               + "Email=?, "
+               + "Rua=?, "
+               + "Logradouro=?, "
+               + "Cep=?, "
+               + "Numero=?, "
+               + "Bairro=?, "
+               + "Cidade=? "
+               + "WHERE IdCliente=?";
+       
+       conn = Conexao.getConexaoMySQL();
+       
+       PreparedStatement statement = conn.prepareStatement(sql);
+       statement.setString(1, cliente.getNome());
+        statement.setString(2, cliente.getRg());
+        statement.setString(3, cliente.getCpf());
+        statement.setString(4, cliente.getDataNascimento());
+        statement.setString(5, cliente.getEmail());
+        statement.setString(6, cliente.getRua());
+        statement.setString(7, cliente.getLogradouro());
+        statement.setString(8, cliente.getCep());
+        statement.setString(9, cliente.getNumero());
+        statement.setString(10, cliente.getBairro());
+        statement.setString(11, cliente.getCidade());
+        statement.setInt(12, cliente.getID());
+       
+       int rowsUpdated = statement.executeUpdate();
+       if (rowsUpdated > 0) {
+            System.out.println("Cliente atualizado!");
+       } else {
+            System.out.println("Erro ao atualizar o cliente.");
+       }
+       
+       Conexao.FecharConexao();
+   }
+    
+       public void Excluir(int id) throws SQLException {
+        String sql = "DELETE FROM tbCliente WHERE IdCliente=?";
+ 
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setInt(1, id);
+
+        int rowsDeleted = statement.executeUpdate();
+        if (rowsDeleted > 0) {
+            System.out.println("Cliente excluido com sucesso!");
+        } else {
+            System.out.println("Erro ao excluir o cliente.");
+        }
+    }
 }
