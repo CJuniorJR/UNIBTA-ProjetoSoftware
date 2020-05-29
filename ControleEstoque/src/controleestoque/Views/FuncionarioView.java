@@ -5,44 +5,46 @@
  */
 package controleestoque.Views;
 
-import controleestoque.Controllers.ClienteController;
-import controleestoque.Models.Cliente;
-import javax.swing.table.DefaultTableModel;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import controleestoque.Controllers.FuncionarioController;
+import controleestoque.Models.Funcionario;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
  * @author sedden
  */
-public class ClienteView extends javax.swing.JFrame {
-    ClienteController controller = new ClienteController();
+public class FuncionarioView extends javax.swing.JFrame {
+    FuncionarioController controller = new FuncionarioController();
     /**
-     * Creates new form ClienteView
+     * Creates new form FuncionarioView
      */
-    public ClienteView() {
+    public FuncionarioView() {
         initComponents();
     }
-    public void ConsultarClientes() {
-        ArrayList<Cliente> clientes = new ArrayList<Cliente>();
-        DefaultTableModel model =(DefaultTableModel) tblCliente.getModel();
+
+    public void ConsultarFuncionarios() {
+        ArrayList<Funcionario> funcionarios = new ArrayList<Funcionario>();
+        DefaultTableModel model =(DefaultTableModel) tblFuncionario.getModel();
         model.setNumRows(0);
         
         try {
-            clientes.addAll(controller.Consultar());
+            funcionarios.addAll(controller.Consultar());
         } catch (SQLException ex) {
             Logger.getLogger(CategoriaView.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        for(int i = 0; i < clientes.size(); i++) {
+        for(int i = 0; i < funcionarios.size(); i++) {
             model.addRow(new Object[] 
             { 
                //retorna os dados da tabela do BD, cada campo e um coluna.
-               clientes.get(i).getID(),
-               clientes.get(i).getNome(),
-               clientes.get(i).getCpf()
+               funcionarios.get(i).getID(),
+               funcionarios.get(i).getNome(),
+               funcionarios.get(i).getCpf()
             });
         }
     }
@@ -55,12 +57,12 @@ public class ClienteView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnVoltar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblCliente = new javax.swing.JTable();
+        tblFuncionario = new javax.swing.JTable();
         btnCadastrar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
-        btnVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -69,7 +71,9 @@ public class ClienteView extends javax.swing.JFrame {
             }
         });
 
-        tblCliente.setModel(new javax.swing.table.DefaultTableModel(
+        btnVoltar.setText("Voltar");
+
+        tblFuncionario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -88,7 +92,7 @@ public class ClienteView extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tblCliente);
+        jScrollPane1.setViewportView(tblFuncionario);
 
         btnCadastrar.setText("Cadastrar");
         btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
@@ -111,8 +115,6 @@ public class ClienteView extends javax.swing.JFrame {
             }
         });
 
-        btnVoltar.setText("Voltar");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -120,12 +122,12 @@ public class ClienteView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnCadastrar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(38, 38, 38)
                         .addComponent(btnEditar)
-                        .addGap(71, 71, 71)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                         .addComponent(btnExcluir)
                         .addGap(74, 74, 74)
                         .addComponent(btnVoltar)))
@@ -148,46 +150,46 @@ public class ClienteView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        ConsultarClientes();
-    }//GEN-LAST:event_formWindowOpened
-
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        int linha = tblCliente.getSelectedRow();
-        
-        Cliente cliente = new Cliente();
-        
+        int linha = tblFuncionario.getSelectedRow();
+
+        Funcionario funcionario = new Funcionario();
+
         try {
-            cliente = controller.Consultar(Integer.parseInt(tblCliente.getValueAt(linha, 0).toString()));
+            funcionario = controller.Consultar(Integer.parseInt(tblFuncionario.getValueAt(linha, 0).toString()));
         } catch (SQLException ex) {
             Logger.getLogger(ClienteView.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        FormClienteView formCliente = new FormClienteView(cliente, this);
-        
-        formCliente.setVisible(true);
+
+        FormFuncionarioView formFuncionario = new FormFuncionarioView(funcionario, this);
+
+        formFuncionario.setVisible(true);
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        int linha = tblCliente.getSelectedRow();
-        
-        int clienteID = Integer.parseInt(tblCliente.getValueAt(linha, 0).toString());
-        
+        int linha = tblFuncionario.getSelectedRow();
+
+        int clienteID = Integer.parseInt(tblFuncionario.getValueAt(linha, 0).toString());
+
         try {
             controller.Excluir(clienteID);
-            
-            this.ConsultarClientes();
+
+            this.ConsultarFuncionarios();
         } catch (SQLException ex) {
             Logger.getLogger(CategoriaView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        this.ConsultarFuncionarios();
+    }//GEN-LAST:event_formWindowOpened
+
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        FormClienteView clienteView = new FormClienteView();
+        FormFuncionarioView formFuncionarioView = new FormFuncionarioView(this);
         
-        clienteView.setVisible(true);
+        formFuncionarioView.setVisible(true);
     }//GEN-LAST:event_btnCadastrarActionPerformed
-    
+
     /**
      * @param args the command line arguments
      */
@@ -205,20 +207,20 @@ public class ClienteView extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ClienteView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FuncionarioView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ClienteView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FuncionarioView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ClienteView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FuncionarioView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ClienteView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FuncionarioView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ClienteView().setVisible(true);
+                new FuncionarioView().setVisible(true);
             }
         });
     }
@@ -229,6 +231,6 @@ public class ClienteView extends javax.swing.JFrame {
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblCliente;
+    private javax.swing.JTable tblFuncionario;
     // End of variables declaration//GEN-END:variables
 }

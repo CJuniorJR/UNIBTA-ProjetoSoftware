@@ -13,6 +13,24 @@ public class Funcionario extends Pessoa {
     private int ID;
     private String Email;
     private String Senha;
+    
+    public Funcionario () {}
+    
+    public Funcionario(int id, String email, String nome, String rg, String cpf, String dataNascimento, String rua, String logradouro, String cep, String numero, String bairro, String cidade, String senha) {
+         this.ID = id;
+         this.Email = email;
+         this.setNome(nome);
+         this.setRg(rg);
+         this.setCpf(cpf);
+         this.setDataNascimento(dataNascimento);
+         this.setRua(rua);
+         this.setLogradouro(logradouro);
+         this.setCep(cep);
+         this.setNumero(numero);
+         this.setBairro(bairro);
+         this.setCidade(cidade);
+         this.setSenha(senha);
+     }
 
     public int getID() {
         return this.ID;
