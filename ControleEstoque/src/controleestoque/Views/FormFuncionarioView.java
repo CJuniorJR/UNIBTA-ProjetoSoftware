@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.SQLException;
 import java.text.ParseException;
+import javax.swing.JOptionPane;
 import javax.swing.text.MaskFormatter;
 
 /**
@@ -21,7 +22,7 @@ public class FormFuncionarioView extends javax.swing.JFrame {
     FuncionarioController controller = new FuncionarioController();
     Funcionario funcionarioEdit = null;
     boolean isEditing = false;
-    FuncionarioView funcionarioView;
+    FuncionarioView funcionarioView = null;
     /**
      * Creates new form FormFuncionarioView
      */
@@ -321,7 +322,9 @@ public class FormFuncionarioView extends javax.swing.JFrame {
                 try {
                     controller.Salvar(funcionario);
 
-                    funcionarioView.ConsultarFuncionarios();
+                    if(funcionarioView != null) {
+                        funcionarioView.ConsultarFuncionarios();
+                    }
                     
                     this.setVisible(false);
                 } catch (SQLException ex) {
@@ -344,18 +347,20 @@ public class FormFuncionarioView extends javax.swing.JFrame {
                 try {
                     controller.Editar(this.funcionarioEdit);
 
-                    this.setVisible(false);
-
-                    funcionarioView.ConsultarFuncionarios();
+                    if(funcionarioView != null) {
+                        funcionarioView.ConsultarFuncionarios();
+                    }
 
                     this.isEditing = false;
+                    
+                    this.setVisible(false);
                 } catch (SQLException ex) {
                     Logger.getLogger(FormCategoriaView.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+        } else {
+            JOptionPane.showMessageDialog(this, "Senhas não são iguais");
         }
-        
-
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
