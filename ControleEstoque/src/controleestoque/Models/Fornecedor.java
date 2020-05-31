@@ -15,6 +15,20 @@ public class Fornecedor extends Endereco {
     private String Email;
     private String Cnpj;
 
+    public Fornecedor() {}
+    
+    public Fornecedor(int id, String email, String nome, String cnpj,  String rua, String logradouro, String cep, String numero, String bairro, String cidade) {
+         this.ID = id;
+         this.Email = email;
+         this.setNome(nome);
+         this.setCnpj(cnpj);
+         this.setRua(rua);
+         this.setLogradouro(logradouro);
+         this.setCep(cep);
+         this.setNumero(numero);
+         this.setBairro(bairro);
+         this.setCidade(cidade);
+     }
 
     public String getEmail() {
         return Email;
@@ -47,6 +61,4 @@ public class Fornecedor extends Endereco {
     public void setCnpj(String Cnpj) {
         this.Cnpj = Cnpj;
     }
-
-    
 }
