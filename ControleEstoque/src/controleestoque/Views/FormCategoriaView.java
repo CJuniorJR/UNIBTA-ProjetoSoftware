@@ -19,6 +19,7 @@ public class FormCategoriaView extends javax.swing.JFrame {
     CategoriaController controller = new CategoriaController();
     Categoria categoria = null;
     CategoriaView categoriaView;
+    FormProdutoView formProdutoView = null;
     boolean isEditing = false;
     /**
      * Creates new form CategoriaView
@@ -41,6 +42,12 @@ public class FormCategoriaView extends javax.swing.JFrame {
         this.categoria = categoria;
         this.isEditing = true;
         label.setText("Editar Categoria");
+    }
+    
+    public FormCategoriaView(FormProdutoView produtoView) {
+        initComponents();
+        this.formProdutoView = produtoView;
+        label.setText("Cadastrar Categoria");
     }
 
     /**
@@ -144,7 +151,11 @@ public class FormCategoriaView extends javax.swing.JFrame {
 
                 this.setVisible(false); 
 
-                categoriaView.ConsultarCategorias();
+                if (categoriaView != null && formProdutoView == null){
+                    categoriaView.ConsultarCategorias(); 
+                } else {
+                    formProdutoView.ConsultarCategorias();
+                }
             } catch (SQLException ex) {
                 Logger.getLogger(FormCategoriaView.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -158,7 +169,11 @@ public class FormCategoriaView extends javax.swing.JFrame {
                 
                 this.isEditing = false;
 
-                categoriaView.ConsultarCategorias();
+                if (categoriaView != null && formProdutoView == null){
+                    categoriaView.ConsultarCategorias(); 
+                } else {
+                    formProdutoView.ConsultarCategorias();
+                }
             } catch (SQLException ex) {
                 Logger.getLogger(FormCategoriaView.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -11,12 +11,26 @@ package controleestoque.Models;
  */
 public class Produto {
     private int ID;
+    private String Nome;
     private String Descricao;
     private double Preco;
     private Categoria Categoria;
     private TipoProduto TipoProduto;
     private int Quantidade;
-    private String Nome;
+    
+    
+    // Construtor para carregar Produto
+    public Produto(int id, String nome, String descricao, double preco, String categoria, String tipoProduto){
+        this.ID = id;
+        this.Nome = nome;
+        this.Descricao = descricao;
+        this.Preco = preco;
+        this.setCategoria(new Categoria(categoria));
+        this.setTipoProduto(new TipoProduto(tipoProduto));
+    }
+    
+    public Produto(){
+    }
     
     public int getID() {
         return this.ID;

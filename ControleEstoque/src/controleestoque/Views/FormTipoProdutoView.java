@@ -19,6 +19,8 @@ public class FormTipoProdutoView extends javax.swing.JFrame {
     TipoController controller = new TipoController();
     TipoProduto tipoProduto = null;
     TipoProdutoView tipoProdutoView;
+    FormProdutoView formProdutoView = null;
+
     boolean isEditing = false;
     /**
      * Creates new form FormTipoProdutoView
@@ -41,6 +43,12 @@ public class FormTipoProdutoView extends javax.swing.JFrame {
         this.tipoProduto = tipoProduto;
         this.isEditing = true;
         lblTipoTitulo.setText("Editar Tipo");
+    }
+    
+        public FormTipoProdutoView(FormProdutoView produtoView) {
+        initComponents();
+        this.formProdutoView = produtoView;
+        lblTipoTitulo.setText("Cadastrar Categoria");
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -138,7 +146,11 @@ public class FormTipoProdutoView extends javax.swing.JFrame {
 
                 this.setVisible(false);
 
-                tipoProdutoView.ConsultarTipos();
+                if (tipoProdutoView != null && formProdutoView == null) {
+                    tipoProdutoView.ConsultarTipos();
+                } else{
+                    formProdutoView.ConsultarTipos();
+                }
             } catch (SQLException ex) {
                 Logger.getLogger(FormTipoProdutoView.class.getName()).log(Level.SEVERE, null, ex);
             }

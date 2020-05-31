@@ -4,8 +4,10 @@
  * and open the template in the editor.
  */
 package controleestoque.Views;
+import controleestoque.Controllers.ProdutoController;
 import controleestoque.Controllers.CategoriaController;
 import controleestoque.Controllers.TipoController;
+import controleestoque.Models.Produto;
 import controleestoque.Models.Categoria;
 import controleestoque.Models.TipoProduto;
 import controleestoque.Views.CategoriaView;
@@ -21,12 +23,69 @@ import javax.swing.table.DefaultTableModel;
  * @author guilhermemarques
  */
 public class FormProdutoView extends javax.swing.JFrame {
-
+    
+    ProdutoController produtoController = new ProdutoController();
+    ProdutoView produtoView = null;
+    Produto produtoEdit = null;
+    CategoriaController categoriaController = new CategoriaController();
+    TipoController tipoController = new TipoController();
+    boolean isEditing = false;
+    
+    
     /**
      * Creates new form ProdutoView
      */
     public FormProdutoView() {
         initComponents();
+    }
+    
+    //Contrutor para salvar um produto
+    public FormProdutoView(ProdutoView produtoView) {
+        initComponents();
+        this.produtoView = produtoView;
+    }
+
+    //Construtor para editar um produto
+    public FormProdutoView(Produto produto, ProdutoView produtoView) {
+        initComponents();
+        this.produtoView = produtoView;
+        this.produtoEdit = produto;
+        this.isEditing = true;
+        //label.setText("Editar Categoria");
+    }
+    
+    public void VerificarProdutoCarregado() {
+        if(this.produtoEdit != null) {
+            txtNome.setText(this.produtoEdit.getNome());
+            dpdCategoria.setSelectedItem(this.produtoEdit.getCategoria().getDescricao());
+            dpdTipo.setSelectedItem(this.produtoEdit.getTipoProduto().getDescricao());
+            txtDescricao.setText(this.produtoEdit.getDescricao());
+            txtPreco.setText(Double.toString(this.produtoEdit.getPreco()));
+        }
+    }
+    
+    public void ConsultarCategorias(){
+        ArrayList<Categoria> categorias = new ArrayList<Categoria>();
+        try {
+            categorias = categoriaController.Consultar();
+            for (Categoria categoria : categorias){
+                dpdCategoria.addItem(categoria.getDescricao());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FormProdutoView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void ConsultarTipos(){
+        ArrayList<TipoProduto> tipos = new ArrayList<TipoProduto>();
+        try{
+            tipos = tipoController.Consultar();
+            for(TipoProduto tipoProduto : tipos){
+                dpdTipo.addItem(tipoProduto.getDescricao());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FormProdutoView.class.getName()).log(Level.SEVERE, null, ex);
+    }
     }
 
     /**
@@ -53,8 +112,15 @@ public class FormProdutoView extends javax.swing.JFrame {
         dpdTipo = new javax.swing.JComboBox<>();
         btnTipo = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        btnSalvar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         lblNome.setText("Nome");
 
@@ -74,9 +140,9 @@ public class FormProdutoView extends javax.swing.JFrame {
 
         lblPreco1.setText("R$");
 
+        lblCategoria.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblCategoria.setText("Categoria");
 
-        dpdCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         dpdCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 dpdCategoriaActionPerformed(evt);
@@ -92,8 +158,6 @@ public class FormProdutoView extends javax.swing.JFrame {
 
         lblTipo.setText("Tipo");
 
-        dpdTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         btnTipo.setText("+");
         btnTipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -103,48 +167,73 @@ public class FormProdutoView extends javax.swing.JFrame {
 
         jLabel1.setText("Produto");
 
+        btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblNome)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(lblDescricao)
-                                .addComponent(lblPreco))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(lblPreco1)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(lblTipo)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(dpdTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(lblCategoria)
-                                    .addGap(2, 2, 2)
-                                    .addComponent(dpdCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(btnCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(11, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblNome)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(lblDescricao)
+                                            .addComponent(lblPreco))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(lblPreco1)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(231, 231, 231)
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblTipo)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(dpdTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblCategoria)
+                                        .addGap(2, 2, 2)
+                                        .addComponent(dpdCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCancelar)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,7 +265,10 @@ public class FormProdutoView extends javax.swing.JFrame {
                     .addComponent(lblTipo)
                     .addComponent(dpdTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTipo))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSalvar)
+                    .addComponent(btnCancelar)))
         );
 
         pack();
@@ -187,18 +279,66 @@ public class FormProdutoView extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPrecoActionPerformed
 
     private void dpdCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dpdCategoriaActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_dpdCategoriaActionPerformed
 
     private void btnCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriaActionPerformed
-        FormCategoriaView formCategoria = new FormCategoriaView();
+        FormCategoriaView formCategoria = new FormCategoriaView(this);
         formCategoria.setVisible(true);
     }//GEN-LAST:event_btnCategoriaActionPerformed
 
     private void btnTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTipoActionPerformed
-        FormTipoProdutoView formTipoProduto = new FormTipoProdutoView();
+        FormTipoProdutoView formTipoProduto = new FormTipoProdutoView(this);
         formTipoProduto.setVisible(true);
     }//GEN-LAST:event_btnTipoActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        ConsultarCategorias();
+        ConsultarTipos();
+        VerificarProdutoCarregado();
+    }//GEN-LAST:event_formWindowOpened
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        Produto produto = new Produto();
+
+        if(!isEditing) {
+            try {
+                produto.setCategoria(new Categoria(dpdCategoria.getSelectedItem().toString()));
+                produto.setTipoProduto(new TipoProduto(dpdTipo.getSelectedItem().toString()));
+                produto.setNome(txtNome.getText());
+                produto.setDescricao(txtDescricao.getText());
+                produto.setPreco(Double.parseDouble(txtPreco.getText()));
+                
+                produtoController.Salvar(produto);
+
+                this.setVisible(false);
+                produtoView.ConsultarProdutos();
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(FormProdutoView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            try {
+                this.produtoEdit.setCategoria(new Categoria(dpdCategoria.getSelectedItem().toString()));
+                this.produtoEdit.setTipoProduto(new TipoProduto(dpdTipo.getSelectedItem().toString()));
+                this.produtoEdit.setNome(txtNome.getText());
+                this.produtoEdit.setDescricao(txtDescricao.getText());
+                this.produtoEdit.setPreco(Double.parseDouble(txtPreco.getText()));
+                
+                produtoController.Editar(this.produtoEdit);
+
+                this.setVisible(false);
+                produtoView.ConsultarProdutos();
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(FormProdutoView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -237,7 +377,9 @@ public class FormProdutoView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCategoria;
+    private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnTipo;
     private javax.swing.JComboBox<String> dpdCategoria;
     private javax.swing.JComboBox<String> dpdTipo;
