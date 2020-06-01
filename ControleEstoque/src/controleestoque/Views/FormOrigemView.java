@@ -4,6 +4,23 @@
  * and open the template in the editor.
  */
 package controleestoque.Views;
+import controleestoque.Controllers.ProdutoController;
+import controleestoque.Controllers.ClienteController;
+import controleestoque.Controllers.FornecedorController;
+import controleestoque.Controllers.CategoriaController;
+import controleestoque.Controllers.TipoController;
+import controleestoque.Models.Produto;
+import controleestoque.Models.Cliente;
+import controleestoque.Models.Categoria;
+import  controleestoque.Models.Fornecedor;
+import controleestoque.Models.TipoProduto;
+import controleestoque.Views.ProdutoView;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -11,12 +28,56 @@ package controleestoque.Views;
  */
 public class FormOrigemView extends javax.swing.JFrame {
 
+        ProdutoController produtoController = new ProdutoController();
+        ClienteController clienteController = new ClienteController();
+        FornecedorController fornecedorController = new FornecedorController();
+
     /**
      * Creates new form FormOrigemView
      */
     public FormOrigemView() {
         initComponents();
     }
+    
+        public void ConsultarProdutos(){
+        ArrayList<Produto> produtos = new ArrayList<Produto>();
+        try {
+            produtos = produtoController.Consultar();
+            for (Produto produto : produtos){
+                dpdProduto.addItem(produto.getNome());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FormOrigemView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+        
+        public void CarregarOrigem(){
+            if (rbtnCliente.isSelected()==false && rbtnFornecedor.isSelected()==false) {
+                lblNomeCliente.setVisible(false);
+                dpdCliente.setVisible(false);
+                lblNomeFornecedor.setVisible(false);
+                dpdFornecedor.setVisible(false);                
+            }
+            
+            try {
+            ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+            clientes = clienteController.Consultar();
+            for (Cliente cliente : clientes){
+                dpdCliente.addItem(cliente.getNome());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FormOrigemView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            try {
+                    ArrayList<Fornecedor> fornecedores = new ArrayList<Fornecedor>();
+                    fornecedores = fornecedorController.Consultar();
+                    for (Fornecedor fornecedor : fornecedores) {
+                        dpdFornecedor.addItem(fornecedor.getNome());                        
+                    }
+        } catch (SQLException ex) {
+            Logger.getLogger(FormOrigemView.class.getName()).log(Level.SEVERE, null, ex);
+        }    
+        }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -31,10 +92,7 @@ public class FormOrigemView extends javax.swing.JFrame {
         lblDescricao = new javax.swing.JLabel();
         lblTitulo = new javax.swing.JLabel();
         btnSalvar = new javax.swing.JButton();
-        lblPreco = new javax.swing.JLabel();
         btnCancelar = new javax.swing.JButton();
-        txtPreco = new javax.swing.JTextField();
-        lblPreco1 = new javax.swing.JLabel();
         lblProduto = new javax.swing.JLabel();
         dpdProduto = new javax.swing.JComboBox<>();
         btnProduto = new javax.swing.JButton();
@@ -43,14 +101,21 @@ public class FormOrigemView extends javax.swing.JFrame {
         txtNome = new javax.swing.JTextField();
         lblData = new javax.swing.JLabel();
         txtData = new javax.swing.JFormattedTextField();
-        lblNomeOrigem = new javax.swing.JLabel();
+        lblNomeCliente = new javax.swing.JLabel();
         rbtnFornecedor = new javax.swing.JRadioButton();
         rbtnCliente = new javax.swing.JRadioButton();
-        dpdOrigem = new javax.swing.JComboBox<>();
+        dpdCliente = new javax.swing.JComboBox<>();
         lblPreco2 = new javax.swing.JLabel();
         txtTotal = new javax.swing.JTextField();
+        dpdFornecedor = new javax.swing.JComboBox<>();
+        lblNomeFornecedor = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         lblDescricao.setText("Total");
 
@@ -64,22 +129,12 @@ public class FormOrigemView extends javax.swing.JFrame {
             }
         });
 
-        lblPreco.setText("Preço de Compra");
-
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
             }
         });
-
-        txtPreco.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPrecoActionPerformed(evt);
-            }
-        });
-
-        lblPreco1.setText("R$");
 
         lblProduto.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblProduto.setText("Produto");
@@ -111,21 +166,39 @@ public class FormOrigemView extends javax.swing.JFrame {
             }
         });
 
-        lblNomeOrigem.setText("Nome");
+        lblNomeCliente.setText("Nome");
 
         buttonGroupOrigem.add(rbtnFornecedor);
         rbtnFornecedor.setText("Fornecedor");
+        rbtnFornecedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnFornecedorActionPerformed(evt);
+            }
+        });
 
         buttonGroupOrigem.add(rbtnCliente);
         rbtnCliente.setText("Cliente");
-
-        dpdOrigem.addActionListener(new java.awt.event.ActionListener() {
+        rbtnCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                dpdOrigemActionPerformed(evt);
+                rbtnClienteActionPerformed(evt);
+            }
+        });
+
+        dpdCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dpdClienteActionPerformed(evt);
             }
         });
 
         lblPreco2.setText("R$");
+
+        dpdFornecedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dpdFornecedorActionPerformed(evt);
+            }
+        });
+
+        lblNomeFornecedor.setText("Nome");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -144,16 +217,6 @@ public class FormOrigemView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblOrigem)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(rbtnFornecedor)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rbtnCliente))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblNomeOrigem)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dpdOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(lblData)
                         .addGap(18, 18, 18)
                         .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -164,18 +227,29 @@ public class FormOrigemView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblPreco)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblPreco1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(lblProduto)
                         .addGap(2, 2, 2)
                         .addComponent(dpdProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(btnProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblNomeFornecedor)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(dpdFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblOrigem)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(rbtnFornecedor)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rbtnCliente)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblNomeCliente)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(dpdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(0, 99, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(73, Short.MAX_VALUE)
                 .addComponent(lblTitulo)
@@ -196,11 +270,14 @@ public class FormOrigemView extends javax.swing.JFrame {
                     .addComponent(lblOrigem)
                     .addComponent(rbtnFornecedor)
                     .addComponent(rbtnCliente))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNomeOrigem)
-                    .addComponent(dpdOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(lblNomeFornecedor)
+                    .addComponent(dpdFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblNomeCliente)
+                        .addComponent(dpdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNome)
                     .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -209,12 +286,7 @@ public class FormOrigemView extends javax.swing.JFrame {
                     .addComponent(lblDescricao)
                     .addComponent(lblPreco2)
                     .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblPreco1)
-                    .addComponent(lblPreco))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblData)
                     .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -233,7 +305,7 @@ public class FormOrigemView extends javax.swing.JFrame {
         if(!isEditing) {
             try {
                 produto.setCategoria(new Categoria(dpdProduto.getSelectedItem().toString()));
-                produto.setTipoProduto(new TipoProduto(dpdOrigem.getSelectedItem().toString()));
+                produto.setTipoProduto(new TipoProduto(dpdCliente.getSelectedItem().toString()));
                 produto.setNome(txtNome.getText());
                 produto.setDescricao(txtDescricao.getText());
                 produto.setPreco(Double.parseDouble(txtPreco.getText()));
@@ -249,7 +321,7 @@ public class FormOrigemView extends javax.swing.JFrame {
         } else {
             try {
                 this.produtoEdit.setCategoria(new Categoria(dpdProduto.getSelectedItem().toString()));
-                this.produtoEdit.setTipoProduto(new TipoProduto(dpdOrigem.getSelectedItem().toString()));
+                this.produtoEdit.setTipoProduto(new TipoProduto(dpdCliente.getSelectedItem().toString()));
                 this.produtoEdit.setNome(txtNome.getText());
                 this.produtoEdit.setDescricao(txtDescricao.getText());
                 this.produtoEdit.setPreco(Double.parseDouble(txtPreco.getText()));
@@ -270,10 +342,6 @@ public class FormOrigemView extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void txtPrecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPrecoActionPerformed
-
     private void dpdProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dpdProdutoActionPerformed
 
     }//GEN-LAST:event_dpdProdutoActionPerformed
@@ -283,13 +351,39 @@ public class FormOrigemView extends javax.swing.JFrame {
         formProduto.setVisible(true);
     }//GEN-LAST:event_btnProdutoActionPerformed
 
-    private void dpdOrigemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dpdOrigemActionPerformed
+    private void dpdClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dpdClienteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_dpdOrigemActionPerformed
+    }//GEN-LAST:event_dpdClienteActionPerformed
 
     private void txtDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDataActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+       CarregarOrigem();
+       ConsultarProdutos();
+    }//GEN-LAST:event_formWindowOpened
+
+    private void dpdFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dpdFornecedorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dpdFornecedorActionPerformed
+
+    private void rbtnFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnFornecedorActionPerformed
+            if (rbtnFornecedor.isSelected()) {
+                lblNomeCliente.setVisible(false);
+                dpdCliente.setVisible(false);
+                lblNomeFornecedor.setVisible(true);
+                dpdFornecedor.setVisible(true);
+            }    }//GEN-LAST:event_rbtnFornecedorActionPerformed
+
+    private void rbtnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnClienteActionPerformed
+            if (rbtnCliente.isSelected()) {
+                lblNomeFornecedor.setVisible(false);
+                dpdFornecedor.setVisible(false);
+                lblNomeCliente.setVisible(true);
+                dpdCliente.setVisible(true);
+
+            }    }//GEN-LAST:event_rbtnClienteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -331,15 +425,15 @@ public class FormOrigemView extends javax.swing.JFrame {
     private javax.swing.JButton btnProduto;
     private javax.swing.JButton btnSalvar;
     private javax.swing.ButtonGroup buttonGroupOrigem;
-    private javax.swing.JComboBox<String> dpdOrigem;
+    private javax.swing.JComboBox<String> dpdCliente;
+    private javax.swing.JComboBox<String> dpdFornecedor;
     private javax.swing.JComboBox<String> dpdProduto;
     private javax.swing.JLabel lblData;
     private javax.swing.JLabel lblDescricao;
     private javax.swing.JLabel lblNome;
-    private javax.swing.JLabel lblNomeOrigem;
+    private javax.swing.JLabel lblNomeCliente;
+    private javax.swing.JLabel lblNomeFornecedor;
     private javax.swing.JLabel lblOrigem;
-    private javax.swing.JLabel lblPreco;
-    private javax.swing.JLabel lblPreco1;
     private javax.swing.JLabel lblPreco2;
     private javax.swing.JLabel lblProduto;
     private javax.swing.JLabel lblTitulo;
@@ -347,7 +441,6 @@ public class FormOrigemView extends javax.swing.JFrame {
     private javax.swing.JRadioButton rbtnFornecedor;
     private javax.swing.JFormattedTextField txtData;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtPreco;
     private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 }

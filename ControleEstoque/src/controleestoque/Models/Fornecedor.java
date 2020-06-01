@@ -17,6 +17,10 @@ public class Fornecedor extends Endereco {
 
     public Fornecedor() {}
     
+    public Fornecedor(String nome) {
+        this.Nome = nome;
+    }
+    
     public Fornecedor(int id, String email, String nome, String cnpj,  String rua, String logradouro, String cep, String numero, String bairro, String cidade) {
          this.ID = id;
          this.Email = email;
