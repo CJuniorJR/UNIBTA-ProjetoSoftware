@@ -16,6 +16,14 @@ public class ProdutoVenda {
     private int Quantidade;
     private double Total;
     
+    public ProdutoVenda() {}
+    
+    public ProdutoVenda(Produto produto, int quantidade, double total) {
+        this.Produto = produto;
+        this.Quantidade = quantidade;
+        this.Total = total;
+    }
+    
     public int getID() {
         return this.ID;
     }

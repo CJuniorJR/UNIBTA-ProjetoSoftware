@@ -19,15 +19,15 @@ import java.util.ArrayList;
 public class VendaController {
     Connection conn;
     
-    public void SalvarProdutoVenda(String produto, int quantidade, Double total, int idVenda) throws SQLException {
-        String sql = "INSER INTO tbProdutoVenda (IdProduto, Quantidade, Total, IdVenda) VALUES(?, ?, ?, ?)";
+    public void SalvarProdutoVenda(ProdutoVenda produtoVenda, int idVenda) throws SQLException {
+        String sql = "INSERT INTO tbProdutoVenda (IdProduto, Quantidade, Total, IdVenda) VALUES(?, ?, ?, ?)";
         
         conn = Conexao.getConexaoMySQL();
         
         PreparedStatement statement = conn.prepareStatement(sql);
-        statement.setString(1, produto);
-        statement.setInt(2, quantidade);
-        statement.setDouble(3, total);
+        statement.setString(1, produtoVenda.getProduto().getNome());
+        statement.setInt(2, produtoVenda.getQuantidade());
+        statement.setDouble(3, produtoVenda.getTotal());
         statement.setInt(4, idVenda);
         
         int rowsInserted = statement.executeUpdate();
@@ -41,8 +41,8 @@ public class VendaController {
        Conexao.FecharConexao();
     }
     
-     public void Salvar(Venda venda, int quantidade, double total) throws SQLException {
-        String sql = "INSERT INTO tbVenda ( Total, IdCliente, FormaPagamento, Data) VALUES (?,?,?,?)";
+     public void Salvar(Venda venda, ArrayList<ProdutoVenda> produtosVenda) throws SQLException {
+        String sql = "INSERT INTO tbVenda (Total, IdCliente, FormaPagamento, Data) VALUES (?,?,?,?)";
         
         conn = Conexao.getConexaoMySQL();
         
@@ -52,11 +52,11 @@ public class VendaController {
         statement.setString(3, venda.getFormaPagamento());
         statement.setString(4, venda.getData());
         
-        int rowsInserted = statement.executeUpdate();
-        ResultSet rs = statement.getGeneratedKeys();
-        if (rowsInserted > 0) {
-            for (Produto produto : venda.getProdutos()) {
-                SalvarProdutoVenda(produto.getNome(), quantidade, total, rs.getInt(1)); 
+        statement.execute();
+        ResultSet rs = statement.executeQuery("SELECT LAST_INSERT_ID()");
+        if (rs.next()) {
+            for (ProdutoVenda produtoVenda : produtosVenda) {
+                SalvarProdutoVenda(produtoVenda, rs.getInt("LAST_INSERT_ID()")); 
             }
             
             System.out.println("Venda salva com sucesso!");

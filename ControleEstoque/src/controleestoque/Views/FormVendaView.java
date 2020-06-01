@@ -7,14 +7,19 @@ package controleestoque.Views;
 
 import controleestoque.Controllers.ClienteController;
 import controleestoque.Controllers.ProdutoController;
+import controleestoque.Controllers.VendaController;
 import controleestoque.Models.Cliente;
 import controleestoque.Models.Produto;
+import controleestoque.Models.ProdutoVenda;
+import controleestoque.Models.Venda;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 
 /**
  *
@@ -22,9 +27,12 @@ import javax.swing.table.DefaultTableModel;
  */
 public class FormVendaView extends javax.swing.JFrame {
     ArrayList<Produto> produtosCarregados = new ArrayList<Produto>();
+    ArrayList<ProdutoVenda> produtosVenda = new ArrayList<ProdutoVenda>();
     ClienteController clienteController = new ClienteController();
     ProdutoController produtoController = new ProdutoController();
+    VendaController vendaController = new VendaController();
     Double total = 0.0;
+    boolean isViewing = false;
     /**
      * Creates new form FormVendaView
      */
@@ -52,6 +60,15 @@ public class FormVendaView extends javax.swing.JFrame {
             }
         } catch (SQLException ex) {
             Logger.getLogger(FormProdutoView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void FormatarCampos() {
+        try {
+            MaskFormatter dataNascimentoMask = new MaskFormatter("##/##/####");
+            dataNascimentoMask.install(txtData);
+        } catch (ParseException ex) {
+            Logger.getLogger(FormClienteView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -124,6 +141,7 @@ public class FormVendaView extends javax.swing.JFrame {
 
         lblNome.setText("Quantidade");
 
+        txtData.setText(" ");
         txtData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDataActionPerformed(evt);
@@ -311,7 +329,25 @@ public class FormVendaView extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDataActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        Venda venda = new Venda();
         
+        if(!isViewing) {
+            venda.setCliente(new Cliente(dpdCliente.getSelectedItem().toString()));
+            venda.setTotal(Double.parseDouble(txtTotal.getText()));
+            venda.setCliente(new Cliente(dpdCliente.getSelectedItem().toString()));
+            venda.setFormaPagamento(dpdFormaPagamento.getSelectedItem().toString());
+            venda.setData(txtData.getText());
+
+            try {
+                vendaController.Salvar(venda, this.produtosVenda);
+
+                this.setVisible(false);
+            } catch (SQLException ex) {
+                Logger.getLogger(FormCategoriaView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            
+        }      
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void dpdClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dpdClienteActionPerformed
@@ -323,18 +359,20 @@ public class FormVendaView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnProduto1ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        DefaultTableModel model =(DefaultTableModel) tblItens.getModel();
-        model.setNumRows(0);
+        this.FormatarCampos();
+        
         ConsultarClientes();
         ConsultarProdutos();
     }//GEN-LAST:event_formWindowOpened
 
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed
         DefaultTableModel model =(DefaultTableModel) tblItens.getModel();
+        model.setNumRows(0);
         Double preco = 0.0;
         
         for (Produto produto : this.produtosCarregados) {
             if(produto.getNome().equals(dpdProduto.getSelectedItem())) {
+                produtosVenda.add(new ProdutoVenda(produto, Integer.parseInt(txtQuantidade.getText()), produto.getPreco() * Integer.parseInt(txtQuantidade.getText())));
                 preco = produto.getPreco();
                 break;
             }
@@ -342,13 +380,16 @@ public class FormVendaView extends javax.swing.JFrame {
         
         total+= preco * Integer.parseInt(txtQuantidade.getText());
         
-        model.addRow(new Object[] 
-        { 
-           //retorna os dados da tabela do BD, cada campo e um coluna.
-           dpdProduto.getSelectedItem(),
-           txtQuantidade.getText(),
-           preco * Integer.parseInt(txtQuantidade.getText())
-        });
+        for (ProdutoVenda produtoVenda : this.produtosVenda) {
+            model.addRow(new Object[] 
+            { 
+               //retorna os dados da tabela do BD, cada campo e um coluna.
+               produtoVenda.getProduto().getNome(),
+               produtoVenda.getQuantidade(),
+               produtoVenda.getTotal()
+            });
+        }
+        
         
         txtTotal.setText(total.toString());
     }//GEN-LAST:event_btnInserirActionPerformed
