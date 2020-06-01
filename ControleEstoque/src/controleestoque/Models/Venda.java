@@ -5,6 +5,8 @@
  */
 package controleestoque.Models;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Rogério
@@ -12,12 +14,31 @@ package controleestoque.Models;
 public class Venda {
     
      private int ID;
-     private ProdutoVenda ProdutoVenda;
      private double Total;
      private Cliente Cliente;
-     private Funcionario Funcionario;
      private String FormaPagamento;
      private String Data;  
+     private ArrayList<Produto> produtos;
+
+    public ArrayList<Produto> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(ArrayList<Produto> produtos) {
+        this.produtos = produtos;
+    }
+     
+     public Venda() {
+         
+     }
+     
+     public Venda(int id, String cliente, String formaPagamento, String data, Double total) {
+         this.ID = id;
+         this.Cliente.setNome(cliente);
+         this.FormaPagamento = formaPagamento;
+         this.Data = data;
+         this.Total = total;
+     }
      
      
  public int getID() {
@@ -27,15 +48,6 @@ public class Venda {
 public void setID(int ID) {
         this.ID = ID;
   }
-  
-      public ProdutoVenda getProdutoVenda() {
-        return this.ProdutoVenda;
-    }
-
-  public void setProdutoVenda(ProdutoVenda ProdutoVenda) {
-        this.ProdutoVenda = ProdutoVenda;
-    }
-     
   
    public double getTotal() {
         return this.Total;
@@ -53,15 +65,6 @@ public void setID(int ID) {
   public void setCliente(Cliente Cliente) {
         this.Cliente = Cliente;
     }  
-  
-  
-   public Funcionario getFuncionario() {
-        return this.Funcionario;
-    }
-
-    public void setFuncionario(Funcionario Funcionario) {
-        this.Funcionario = Funcionario;
-    }
     
     
        public String getFormaPagamento() {

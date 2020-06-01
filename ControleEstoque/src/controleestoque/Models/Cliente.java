@@ -15,6 +15,9 @@ public class Cliente extends Pessoa {
      private Venda Venda;
      
      public Cliente() {}
+     public Cliente(String nome) {
+         this.setNome(nome);
+     }
   
      public Cliente(int id, String email, String nome, String rg, String cpf, String dataNascimento, String rua, String logradouro, String cep, String numero, String bairro, String cidade) {
          this.ID = id;

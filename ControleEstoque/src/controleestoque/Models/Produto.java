@@ -18,6 +18,8 @@ public class Produto {
     private TipoProduto TipoProduto;
     private int Quantidade;
     
+    public Produto(){
+    }
     
     // Construtor para carregar Produto
     public Produto(int id, String nome, String descricao, double preco, String categoria, String tipoProduto){
@@ -29,8 +31,7 @@ public class Produto {
         this.setTipoProduto(new TipoProduto(tipoProduto));
     }
     
-    public Produto(){
-    }
+    
     
     public int getID() {
         return this.ID;
