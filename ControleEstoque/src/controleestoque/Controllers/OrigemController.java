@@ -6,6 +6,7 @@
 package controleestoque.Controllers;
 import controleestoque.Models.Origem;
 import controleestoque.Models.Cliente;
+import controleestoque.Models.Produto;
 import controleestoque.Models.Fornecedor;
 import controleestoque.Views.OrigemView;
 
@@ -21,16 +22,17 @@ public class OrigemController extends javax.swing.JFrame {
     Connection conn;
 
     public void Salvar(Origem origem) throws SQLException {
-        String sql = "INSERT INTO tbOrigem (Nome, Fornecedor, Cliente, Produto, Quantidade, Total, Data) VALUES (?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO tbOrigem (Fornecedor, Cliente, Produto, Quantidade, Total, Data) VALUES (?,?,?,?,?,?)";
         
         conn = Conexao.getConexaoMySQL();
         
         PreparedStatement statement = conn.prepareStatement(sql);
-        statement.setString(1, origem.getNome());
-        statement.setString(2, origem.getDescricao());
-        statement.setDouble(3, origem.getPreco());
-        statement.setString(4, origem.getTipoOrigem().getDescricao());
-        statement.setString(5, origem.getCategoria().getDescricao());
+        statement.setString(1, origem.getFornecedor().getNome());
+        statement.setString(2, origem.getCliente().getNome());
+        statement.setString(3, origem.getProduto().getNome());
+        statement.setInt(4, origem.getQuantidade());
+        statement.setDouble(5, origem.getTotal());
+        statement.setString(6, origem.getData());
         
         int rowsInserted = statement.executeUpdate();
         if (rowsInserted > 0) {
@@ -50,20 +52,21 @@ public class OrigemController extends javax.swing.JFrame {
         ResultSet result = statement.executeQuery(sql);
         ArrayList<Origem> origens = new ArrayList<Origem>();
         while (result.next()){
-            origems.add(
+            origens.add(
                     new Origem(
                             result.getInt("IdOrigem"), 
-                            result.getString("Nome"),
-                            result.getString("Descricao"),
-                            result.getDouble("Preco"),
-                            result.getString("IdCategoria"),
-                            result.getString("IdTipoOrigem")
+                            result.getString("Fornecedor"),
+                            result.getString("Cliente"),
+                            result.getString("Produto"),
+                            result.getInt("Quantidade"),
+                            result.getDouble("Total"),
+                            result.getString("Data")
                     )
             );
         }
         
         Conexao.FecharConexao();
-       return origems;
+       return origens;
    }
     
     public Origem Consultar(int idOrigem) throws SQLException {
@@ -78,58 +81,16 @@ public class OrigemController extends javax.swing.JFrame {
         Origem origem = new Origem();
         while (result.next()){
             origem.setID(result.getInt("IdOrigem"));
-            origem.setNome(result.getString("Nome"));
-            origem.setDescricao(result.getString("Descricao"));
-            origem.setPreco(result.getDouble("Preco"));
-            origem.setCategoria(new Categoria(result.getString("IdCategoria")));
-            origem.setTipoOrigem(new TipoOrigem(result.getString("IdTipoOrigem")));
+            origem.setFornecedor(new Fornecedor(result.getString("IdFornecedor")));
+            origem.setCliente(new Cliente(result.getString("IdCliente")));
+            origem.setProduto(new Produto(result.getString("IdProduto")));
+            origem.setQuantidade(result.getInt("Quantidade"));
+            origem.setTotal(result.getDouble("Total"));
+            origem.setData(result.getString("Data"));
         }
         
         Conexao.FecharConexao();
        return origem;
-    }
-    
-    public void Editar(Origem origem) throws SQLException {
-       String sql = "UPDATE tbOrigem SET "
-               + "Nome=?, "
-               + "Descricao=?, "
-               + "Preco=?, "
-               + "IdCategoria=?, "
-               + "IdTipoOrigem=? "
-               + "WHERE IdOrigem=?";
-       
-       conn = Conexao.getConexaoMySQL();
-       
-       PreparedStatement statement = conn.prepareStatement(sql);
-       statement.setString(1, origem.getNome());
-        statement.setString(2, origem.getDescricao());
-        statement.setDouble(3, origem.getPreco());
-        statement.setString(4, origem.getCategoria().getDescricao());
-        statement.setString(5, origem.getTipoOrigem().getDescricao());
-        statement.setInt(6, origem.getID());
-       
-       int rowsUpdated = statement.executeUpdate();
-       if (rowsUpdated > 0) {
-            System.out.println("Origem atualizado!");
-       } else {
-            System.out.println("Erro ao atualizar a origem.");
-       }
-       
-       Conexao.FecharConexao();
-   }
-    
-       public void Excluir(int id) throws SQLException {
-        String sql = "DELETE FROM tbOrigem WHERE IdOrigem=?";
- 
-        PreparedStatement statement = conn.prepareStatement(sql);
-        statement.setInt(1, id);
-
-        int rowsDeleted = statement.executeUpdate();
-        if (rowsDeleted > 0) {
-            System.out.println("Origem excluido com sucesso!");
-        } else {
-            System.out.println("Erro ao excluir a origem.");
-        }
     }
     
 }

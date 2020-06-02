@@ -19,13 +19,17 @@ public class Origem {
     private String Data;
     private double PrecoCompra;
     
-    public Origem (int id, String fornecedor, String cliente, int quantidade, double total, String data){
+    public Origem (int id, String fornecedor, String cliente, String produto, int quantidade, double total, String data){
         this.ID = id;
         this.setFornecedor(new Fornecedor(fornecedor));
         this.setCliente(new Cliente(cliente));
+        this.setProduto(new Produto(produto));
         this.Quantidade = quantidade;
         this.Total = total;
         this.Data = data;
+    }
+
+    public Origem() {
     }
 
     public int getID() {

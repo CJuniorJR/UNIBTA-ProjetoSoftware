@@ -42,8 +42,6 @@ public class OrigemView extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblOrigem = new javax.swing.JTable();
         btnCadastrar = new javax.swing.JButton();
-        btnEditar = new javax.swing.JButton();
-        btnExcluir = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
         lblTitulo = new javax.swing.JLabel();
 
@@ -77,20 +75,6 @@ public class OrigemView extends javax.swing.JFrame {
             }
         });
 
-        btnEditar.setText("Editar");
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
-            }
-        });
-
-        btnExcluir.setText("Excluir");
-        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExcluirActionPerformed(evt);
-            }
-        });
-
         btnVoltar.setText("Voltar");
 
         lblTitulo.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
@@ -103,14 +87,10 @@ public class OrigemView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnCadastrar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnEditar)
-                        .addGap(71, 71, 71)
-                        .addComponent(btnExcluir)
-                        .addGap(74, 74, 74)
                         .addComponent(btnVoltar)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
@@ -128,9 +108,7 @@ public class OrigemView extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCadastrar)
-                    .addComponent(btnExcluir)
-                    .addComponent(btnVoltar)
-                    .addComponent(btnEditar))
+                    .addComponent(btnVoltar))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
@@ -138,40 +116,10 @@ public class OrigemView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        FormClienteView clienteView = new FormClienteView();
+        FormOrigemView origemView = new FormOrigemView();
 
-        clienteView.setVisible(true);
+        origemView.setVisible(true);
     }//GEN-LAST:event_btnCadastrarActionPerformed
-
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        int linha = tblOrigem.getSelectedRow();
-
-        Cliente cliente = new Cliente();
-
-        try {
-            cliente = controller.Consultar(Integer.parseInt(tblOrigem.getValueAt(linha, 0).toString()));
-        } catch (SQLException ex) {
-            Logger.getLogger(ClienteView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        FormClienteView formCliente = new FormClienteView(cliente, this);
-
-        formCliente.setVisible(true);
-    }//GEN-LAST:event_btnEditarActionPerformed
-
-    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        int linha = tblOrigem.getSelectedRow();
-
-        int clienteID = Integer.parseInt(tblOrigem.getValueAt(linha, 0).toString());
-
-        try {
-            controller.Excluir(clienteID);
-
-            this.ConsultarClientes();
-        } catch (SQLException ex) {
-            Logger.getLogger(CategoriaView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -210,8 +158,6 @@ public class OrigemView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCadastrar;
-    private javax.swing.JButton btnEditar;
-    private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblTitulo;
