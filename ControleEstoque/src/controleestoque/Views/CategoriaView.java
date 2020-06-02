@@ -23,6 +23,7 @@ public class CategoriaView extends javax.swing.JFrame {
      */
     public CategoriaView() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     
     public void ConsultarCategorias() {

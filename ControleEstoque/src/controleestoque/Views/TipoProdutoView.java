@@ -24,6 +24,7 @@ public class TipoProdutoView extends javax.swing.JFrame {
      */
     public TipoProdutoView() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     public void ConsultarTipos() {

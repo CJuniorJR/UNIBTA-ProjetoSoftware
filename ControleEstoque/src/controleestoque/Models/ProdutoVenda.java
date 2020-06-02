@@ -18,6 +18,12 @@ public class ProdutoVenda {
     
     public ProdutoVenda() {}
     
+    public ProdutoVenda(int id, String nome, Double total) {
+        this.ID = id;
+        this.Produto = new Produto(nome);
+        this.Total = total;
+    }
+    
     public ProdutoVenda(Produto produto, int quantidade, double total) {
         this.Produto = produto;
         this.Quantidade = quantidade;

@@ -20,7 +20,8 @@ import javax.swing.text.MaskFormatter;
  */
 public class FormClienteView extends javax.swing.JFrame {
     ClienteController controller = new ClienteController();
-    ClienteView clienteView;
+    ClienteView clienteView = null;
+    FormVendaView formVendaView = null;
     Cliente clienteEdit = null;
     boolean isEditing = false;
     /**
@@ -28,17 +29,26 @@ public class FormClienteView extends javax.swing.JFrame {
      */
     public FormClienteView() {
         initComponents();
+        this.setLocationRelativeTo(null);
+    }
+    
+    public FormClienteView(FormVendaView formVendaView) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.formVendaView = formVendaView;
     }
     
     //Contrutor para salvar um cliente
     public FormClienteView(ClienteView clienteView) {
         initComponents();
+        this.setLocationRelativeTo(null);
         this.clienteView = clienteView;
     }
 
     //Construtor para editar um cliente
     public FormClienteView(Cliente cliente, ClienteView clienteView) {
         initComponents();
+        this.setLocationRelativeTo(null);
         this.clienteView = clienteView;
         this.clienteEdit = cliente;
         this.isEditing = true;
@@ -297,7 +307,13 @@ public class FormClienteView extends javax.swing.JFrame {
                 
                 this.setVisible(false);
                 
-                clienteView.ConsultarClientes();
+                if(this.clienteView != null)
+                    this.clienteView.ConsultarClientes();
+                
+                if(this.formVendaView != null) 
+                    this.formVendaView.ConsultarClientes();
+                
+                
             } catch (SQLException ex) {
                 Logger.getLogger(FormCategoriaView.class.getName()).log(Level.SEVERE, null, ex);
             }

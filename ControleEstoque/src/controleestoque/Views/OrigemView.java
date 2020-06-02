@@ -27,6 +27,7 @@ public class OrigemView extends javax.swing.JFrame {
      */
     public OrigemView() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

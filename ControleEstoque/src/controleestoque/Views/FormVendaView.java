@@ -31,6 +31,8 @@ public class FormVendaView extends javax.swing.JFrame {
     ClienteController clienteController = new ClienteController();
     ProdutoController produtoController = new ProdutoController();
     VendaController vendaController = new VendaController();
+    Venda vendaVisualizacao = null;
+    VendaView vendaView = null;
     Double total = 0.0;
     boolean isViewing = false;
     /**
@@ -38,11 +40,73 @@ public class FormVendaView extends javax.swing.JFrame {
      */
     public FormVendaView() {
         initComponents();
+        this.setLocationRelativeTo(null);
+    }
+    
+    //Contrutor para salvar um funcionario pela tela de visualização de funcionarios.
+    public FormVendaView(VendaView vendaView) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.vendaView = vendaView;
+    }
+
+    //Construtor para editar um funcionario
+    public FormVendaView(int idVenda, VendaView vendaView) throws SQLException {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.vendaView = vendaView;
+        this.vendaVisualizacao = vendaController.Consultar(idVenda);
+        this.isViewing = true;
+        //label.setText("Editar Categoria");
+    }
+    
+    public void ConsultarProdutosVenda(int id) {
+        ArrayList<ProdutoVenda> produtosVendaConsulta = new ArrayList<ProdutoVenda>();
+        DefaultTableModel model =(DefaultTableModel) tblItens.getModel();
+        model.setNumRows(0);
+        
+        try {
+            produtosVendaConsulta = vendaController.ConsultarProdutosVenda(id);
+            
+            for (ProdutoVenda produtoVenda : produtosVendaConsulta){
+            model.addRow(new Object[] 
+            { 
+               //retorna os dados da tabela do BD, cada campo e um coluna.
+               produtoVenda.getProduto().getNome(),
+               produtoVenda.getQuantidade(),
+               produtoVenda.getTotal()
+            });
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FormProdutoView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void VerificarVendaCarregada() {
+        if(this.vendaVisualizacao != null) {
+            ConsultarProdutosVenda(this.vendaVisualizacao.getID());
+            txtTotal.setText(Double.toString(this.vendaVisualizacao.getTotal()));
+            dpdFormaPagamento.setSelectedItem(this.vendaVisualizacao.getFormaPagamento());
+            txtData.setText(this.vendaVisualizacao.getData());
+            
+            txtTotal.setEnabled(false);
+            dpdFormaPagamento.setEnabled(false);
+            txtData.setEditable(false);
+            tblItens.setEnabled(false);
+            dpdCliente.setEnabled(false);
+            dpdProduto.setEnabled(false);
+            txtQuantidade.setEnabled(false);
+            btnSalvar.setEnabled(false);
+            btnInserir.setEnabled(false);
+            btnProduto.setEnabled(false);
+            btnProduto1.setEnabled(false);
+        }
     }
     
     public void ConsultarClientes(){
         ArrayList<Cliente> clientes = new ArrayList<Cliente>();
         try {
+            dpdCliente.removeAllItems();
             clientes = clienteController.Consultar();
             for (Cliente cliente : clientes){
                 dpdCliente.addItem(cliente.getNome());
@@ -54,6 +118,7 @@ public class FormVendaView extends javax.swing.JFrame {
     
     public void ConsultarProdutos(){
         try {
+            dpdCliente.removeAllItems();
             this.produtosCarregados = produtoController.Consultar();
             for (Produto produto : this.produtosCarregados){
                 dpdProduto.addItem(produto.getNome());
@@ -302,9 +367,9 @@ public class FormVendaView extends javax.swing.JFrame {
                     .addComponent(lblData)
                     .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSalvar)
-                    .addComponent(btnCancelar))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCancelar)
+                    .addComponent(btnSalvar))
                 .addContainerGap(42, Short.MAX_VALUE))
         );
 
@@ -320,7 +385,7 @@ public class FormVendaView extends javax.swing.JFrame {
     }//GEN-LAST:event_dpdProdutoActionPerformed
 
     private void btnProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProdutoActionPerformed
-        FormProdutoView formProduto = new FormProdutoView();
+        FormProdutoView formProduto = new FormProdutoView(this);
         formProduto.setVisible(true);
     }//GEN-LAST:event_btnProdutoActionPerformed
 
@@ -341,6 +406,10 @@ public class FormVendaView extends javax.swing.JFrame {
             try {
                 vendaController.Salvar(venda, this.produtosVenda);
 
+                if(this.vendaView != null) {
+                    vendaView.ConsultarVendas();
+                }
+                
                 this.setVisible(false);
             } catch (SQLException ex) {
                 Logger.getLogger(FormCategoriaView.class.getName()).log(Level.SEVERE, null, ex);
@@ -355,7 +424,9 @@ public class FormVendaView extends javax.swing.JFrame {
     }//GEN-LAST:event_dpdClienteActionPerformed
 
     private void btnProduto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProduto1ActionPerformed
-        // TODO add your handling code here:
+        FormClienteView formClienteView = new FormClienteView(this);
+        
+        formClienteView.setVisible(true);
     }//GEN-LAST:event_btnProduto1ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -363,6 +434,7 @@ public class FormVendaView extends javax.swing.JFrame {
         
         ConsultarClientes();
         ConsultarProdutos();
+        VerificarVendaCarregada();
     }//GEN-LAST:event_formWindowOpened
 
     private void btnInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirActionPerformed

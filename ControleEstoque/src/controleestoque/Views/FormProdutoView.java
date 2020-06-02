@@ -23,31 +23,40 @@ import javax.swing.table.DefaultTableModel;
  * @author guilhermemarques
  */
 public class FormProdutoView extends javax.swing.JFrame {
-    
     ProdutoController produtoController = new ProdutoController();
     ProdutoView produtoView = null;
     Produto produtoEdit = null;
     CategoriaController categoriaController = new CategoriaController();
     TipoController tipoController = new TipoController();
+    FormVendaView formVendaView = null;
     boolean isEditing = false;
     
     
     /**
      * Creates new form ProdutoView
      */
+    public FormProdutoView(FormVendaView formVendaview) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.formVendaView = formVendaview;
+    }
+    
     public FormProdutoView() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     
     //Contrutor para salvar um produto
     public FormProdutoView(ProdutoView produtoView) {
         initComponents();
+        this.setLocationRelativeTo(null);
         this.produtoView = produtoView;
     }
 
     //Construtor para editar um produto
     public FormProdutoView(Produto produto, ProdutoView produtoView) {
         initComponents();
+        this.setLocationRelativeTo(null);
         this.produtoView = produtoView;
         this.produtoEdit = produto;
         this.isEditing = true;
@@ -310,9 +319,15 @@ public class FormProdutoView extends javax.swing.JFrame {
                 
                 produtoController.Salvar(produto);
 
-                this.setVisible(false);
-                produtoView.ConsultarProdutos();
                 
+                
+                if(produtoView != null) 
+                    produtoView.ConsultarProdutos();
+                
+                if(formVendaView != null)
+                    formVendaView.ConsultarProdutos();
+                
+                this.setVisible(false);
             } catch (SQLException ex) {
                 Logger.getLogger(FormProdutoView.class.getName()).log(Level.SEVERE, null, ex);
             }

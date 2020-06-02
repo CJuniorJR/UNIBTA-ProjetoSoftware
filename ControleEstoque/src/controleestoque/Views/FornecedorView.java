@@ -22,6 +22,7 @@ public class FornecedorView extends javax.swing.JFrame {
      */
     public FornecedorView() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     
     public void ConsultarFornecedores() {

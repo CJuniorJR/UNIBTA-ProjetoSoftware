@@ -24,6 +24,7 @@ public class ClienteView extends javax.swing.JFrame {
      */
     public ClienteView() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     public void ConsultarClientes() {
         ArrayList<Cliente> clientes = new ArrayList<Cliente>();

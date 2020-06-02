@@ -27,11 +27,13 @@ public class FormTipoProdutoView extends javax.swing.JFrame {
      */
     public FormTipoProdutoView() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
    
     //Contrutor para salvar um tipo
         public FormTipoProdutoView(TipoProdutoView tipoProdutoView) {
         initComponents();
+        this.setLocationRelativeTo(null);
         this.tipoProdutoView = tipoProdutoView;
         lblTipoTitulo.setText("Cadastrar Tipo");
     }
@@ -39,6 +41,7 @@ public class FormTipoProdutoView extends javax.swing.JFrame {
     //Construtor para editar um tipo
     public FormTipoProdutoView(TipoProduto tipoProduto, TipoProdutoView tipoProdutoView) {
         initComponents();
+        this.setLocationRelativeTo(null);
         this.tipoProdutoView = tipoProdutoView;
         this.tipoProduto = tipoProduto;
         this.isEditing = true;

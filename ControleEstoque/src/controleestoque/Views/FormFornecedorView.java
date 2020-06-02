@@ -27,16 +27,19 @@ public class FormFornecedorView extends javax.swing.JFrame {
      */
     public FormFornecedorView() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     //Contrutor para salvar um funcionario pela tela de visualização de funcionarios.
     public FormFornecedorView(FornecedorView fornecedorView) {
         initComponents();
+        this.setLocationRelativeTo(null);
         this.fornecedorView = fornecedorView;
     }
 
     //Construtor para editar um funcionario
     public FormFornecedorView(Fornecedor fornecedor, FornecedorView fornecedorView) {
         initComponents();
+        this.setLocationRelativeTo(null);
         this.fornecedorView = fornecedorView;
         this.fornecedorEdit = fornecedor;
         this.isEditing = true;

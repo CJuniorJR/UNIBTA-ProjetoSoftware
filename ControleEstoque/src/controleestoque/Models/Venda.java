@@ -32,9 +32,9 @@ public class Venda {
          
      }
      
-     public Venda(int id, String cliente, String formaPagamento, String data, Double total) {
+     public Venda(int id, Cliente cliente, String formaPagamento, String data, Double total) {
          this.ID = id;
-         this.Cliente.setNome(cliente);
+         this.Cliente = cliente;
          this.FormaPagamento = formaPagamento;
          this.Data = data;
          this.Total = total;

@@ -28,17 +28,20 @@ public class FormFuncionarioView extends javax.swing.JFrame {
      */
     public FormFuncionarioView() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     
     //Contrutor para salvar um funcionario pela tela de visualização de funcionarios.
     public FormFuncionarioView(FuncionarioView funcionarioView) {
         initComponents();
+        this.setLocationRelativeTo(null);
         this.funcionarioView = funcionarioView;
     }
 
     //Construtor para editar um funcionario
     public FormFuncionarioView(Funcionario funcionario, FuncionarioView funcionarioView) {
         initComponents();
+        this.setLocationRelativeTo(null);
         this.funcionarioView = funcionarioView;
         this.funcionarioEdit = funcionario;
         this.isEditing = true;

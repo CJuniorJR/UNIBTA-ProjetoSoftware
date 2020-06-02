@@ -21,6 +21,10 @@ public class Produto {
     public Produto(){
     }
     
+    public Produto(String nome){
+        this.Nome = nome;
+    }
+    
     // Construtor para carregar Produto
     public Produto(int id, String nome, String descricao, double preco, String categoria, String tipoProduto){
         this.ID = id;

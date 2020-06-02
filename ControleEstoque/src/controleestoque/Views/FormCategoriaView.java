@@ -26,11 +26,13 @@ public class FormCategoriaView extends javax.swing.JFrame {
      */
     public FormCategoriaView() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     
     //Contrutor para salvar uma categoria
     public FormCategoriaView(CategoriaView categoriaView) {
         initComponents();
+        this.setLocationRelativeTo(null);
         this.categoriaView = categoriaView;
         label.setText("Cadastrar Categoria");
     }
@@ -38,6 +40,7 @@ public class FormCategoriaView extends javax.swing.JFrame {
     //Construtor para editar uma categoria
     public FormCategoriaView(Categoria categoria, CategoriaView categoriaView) {
         initComponents();
+        this.setLocationRelativeTo(null);
         this.categoriaView = categoriaView;
         this.categoria = categoria;
         this.isEditing = true;

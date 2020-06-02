@@ -79,7 +79,7 @@ public class VendaController {
             vendas.add(
                     new Venda(
                             result.getInt("IdVenda"), 
-                            result.getString("IdCliente"),
+                            new Cliente(result.getString("IdCliente")),
                             result.getString("FormaPagamento"),
                             result.getString("Data"),
                             result.getDouble("Total")
@@ -125,5 +125,29 @@ public class VendaController {
         } else {
             System.out.println("Erro ao excluir a venda.");
         }
+    }
+       
+    public ArrayList<ProdutoVenda> ConsultarProdutosVenda(int idVenda) throws SQLException {
+        String sql = "SELECT * from tbProdutoVenda WHERE IdVenda=?;";
+        
+        conn = Conexao.getConexaoMySQL();
+        
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setInt(1, idVenda);
+        
+        ResultSet result = statement.executeQuery();
+        ArrayList<ProdutoVenda> produtosVenda = new ArrayList<ProdutoVenda>();
+        while (result.next()){
+            produtosVenda.add(
+                    new ProdutoVenda(
+                            result.getInt("IdProdutoVenda"), 
+                            result.getString("IdProduto"),
+                            result.getDouble("Total")
+                    )
+            );
+        }
+        
+        Conexao.FecharConexao();
+       return produtosVenda;
     }
 }

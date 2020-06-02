@@ -25,6 +25,7 @@ public class FuncionarioView extends javax.swing.JFrame {
      */
     public FuncionarioView() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     public void ConsultarFuncionarios() {

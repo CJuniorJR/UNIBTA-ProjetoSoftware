@@ -16,6 +16,7 @@ public class TelaInicialView extends javax.swing.JFrame {
      */
     public TelaInicialView() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
