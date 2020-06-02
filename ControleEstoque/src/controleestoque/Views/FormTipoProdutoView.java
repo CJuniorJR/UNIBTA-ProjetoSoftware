@@ -69,6 +69,7 @@ public class FormTipoProdutoView extends javax.swing.JFrame {
         lblTipoTitulo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         txtTipo.setText("Descrição");
         txtTipo.addActionListener(new java.awt.event.ActionListener() {

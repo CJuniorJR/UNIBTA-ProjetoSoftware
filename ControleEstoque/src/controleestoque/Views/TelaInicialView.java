@@ -39,26 +39,57 @@ public class TelaInicialView extends javax.swing.JFrame {
         btnCadastrarFornecedor = new javax.swing.JButton();
         btnNovaVenda = new javax.swing.JButton();
         lblTitulo = new javax.swing.JLabel();
+        btnFuncionario = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btnProdutos.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         btnProdutos.setText("Produtos");
+        btnProdutos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProdutosActionPerformed(evt);
+            }
+        });
 
         btnClientes.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         btnClientes.setText("Clientes");
+        btnClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClientesActionPerformed(evt);
+            }
+        });
 
         btnFornecedores.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         btnFornecedores.setText("Fornecedores");
+        btnFornecedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFornecedoresActionPerformed(evt);
+            }
+        });
 
         btnEntradas.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         btnEntradas.setText("Entradas");
+        btnEntradas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEntradasActionPerformed(evt);
+            }
+        });
 
         btnVendas.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         btnVendas.setText("Vendas");
+        btnVendas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVendasActionPerformed(evt);
+            }
+        });
 
         btnCadastrarProduto.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         btnCadastrarProduto.setText("+");
+        btnCadastrarProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCadastrarProdutoActionPerformed(evt);
+            }
+        });
 
         btnCadastrasEntrada.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         btnCadastrasEntrada.setText("+");
@@ -75,40 +106,42 @@ public class TelaInicialView extends javax.swing.JFrame {
         lblTitulo.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         lblTitulo.setText("CONTROLE DE ESTOQUE");
 
+        btnFuncionario.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
+        btnFuncionario.setText("Funcionario");
+        btnFuncionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFuncionarioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnProdutos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnVendas, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnVendas)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnNovaVenda))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnProdutos)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btnCadastrarProduto))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnClientes)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btnCadastrarCliente)))
-                                .addGap(131, 131, 131)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(btnFornecedores)
-                                    .addComponent(btnEntradas))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnCadastrasEntrada)
-                                    .addComponent(btnCadastrarFornecedor)))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(221, 221, 221)
-                        .addComponent(lblTitulo)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(btnCadastrarCliente)
+                                .addComponent(btnNovaVenda, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addComponent(btnCadastrarProduto))
+                        .addGap(87, 87, 87)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnFornecedores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnEntradas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnFuncionario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnCadastrasEntrada)
+                            .addComponent(btnCadastrarFornecedor)))
+                    .addComponent(lblTitulo))
                 .addGap(0, 56, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -131,13 +164,54 @@ public class TelaInicialView extends javax.swing.JFrame {
                 .addGap(56, 56, 56)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnVendas)
-                    .addComponent(btnNovaVenda))
+                    .addComponent(btnNovaVenda)
+                    .addComponent(btnFuncionario))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCadastrarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarProdutoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCadastrarProdutoActionPerformed
+
+    private void btnFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFuncionarioActionPerformed
+        FuncionarioView funcionarioView = new FuncionarioView();
+        
+        funcionarioView.setVisible(true);
+    }//GEN-LAST:event_btnFuncionarioActionPerformed
+
+    private void btnFornecedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFornecedoresActionPerformed
+        FornecedorView fornecedorView = new FornecedorView();
+        
+        fornecedorView.setVisible(true);
+    }//GEN-LAST:event_btnFornecedoresActionPerformed
+
+    private void btnEntradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradasActionPerformed
+        OrigemView origemView = new OrigemView();
+        
+        origemView.setVisible(true);
+    }//GEN-LAST:event_btnEntradasActionPerformed
+
+    private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
+        VendaView vendaView = new VendaView();
+        
+        vendaView.setVisible(true);
+    }//GEN-LAST:event_btnVendasActionPerformed
+
+    private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
+        ClienteView clienteView = new ClienteView();
+        
+        clienteView.setVisible(true);
+    }//GEN-LAST:event_btnClientesActionPerformed
+
+    private void btnProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProdutosActionPerformed
+        ProdutoView produtoView = new ProdutoView();
+        
+        produtoView.setVisible(true);
+    }//GEN-LAST:event_btnProdutosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -182,6 +256,7 @@ public class TelaInicialView extends javax.swing.JFrame {
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnEntradas;
     private javax.swing.JButton btnFornecedores;
+    private javax.swing.JButton btnFuncionario;
     private javax.swing.JButton btnNovaVenda;
     private javax.swing.JButton btnProdutos;
     private javax.swing.JButton btnVendas;

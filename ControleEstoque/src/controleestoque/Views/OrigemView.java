@@ -46,6 +46,7 @@ public class OrigemView extends javax.swing.JFrame {
         lblTitulo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         tblOrigem.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

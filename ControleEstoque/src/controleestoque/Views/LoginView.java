@@ -103,12 +103,16 @@ public class LoginView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-        Funcionario funcionario;
+        Funcionario funcionario = null;
         
         try {
             funcionario = controller.Login(this.txtEmail.getText(), this.txtSenha.getText());
             
-            System.out.println(funcionario.getNome());
+            if(funcionario != null) {
+                TelaInicialView telaInicial = new TelaInicialView();
+                
+                telaInicial.setVisible(true);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
         }

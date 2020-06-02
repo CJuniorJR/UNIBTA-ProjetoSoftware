@@ -24,45 +24,35 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
+              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="btnProdutos" max="32767" attributes="0"/>
+                  <Component id="btnClientes" alignment="0" max="32767" attributes="0"/>
+                  <Component id="btnVendas" alignment="0" min="-2" pref="177" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="btnVendas" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btnNovaVenda" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="0" attributes="0">
+                              <Component id="btnCadastrarCliente" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnNovaVenda" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="btnProdutos" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="btnCadastrarProduto" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="btnClientes" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="btnCadastrarCliente" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <EmptySpace min="-2" pref="131" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="btnFornecedores" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btnEntradas" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="btnCadastrasEntrada" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btnCadastrarFornecedor" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <Component id="btnCadastrarProduto" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="btnFornecedores" max="32767" attributes="0"/>
+                          <Component id="btnEntradas" max="32767" attributes="0"/>
+                          <Component id="btnFuncionario" alignment="0" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="btnCadastrasEntrada" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnCadastrarFornecedor" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="221" max="-2" attributes="0"/>
-                      <Component id="lblTitulo" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="lblTitulo" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="0" pref="56" max="32767" attributes="0"/>
           </Group>
@@ -91,6 +81,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnVendas" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnNovaVenda" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnFuncionario" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="30" max="32767" attributes="0"/>
           </Group>
@@ -105,6 +96,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Produtos"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnProdutosActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnClientes">
       <Properties>
@@ -113,6 +107,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Clientes"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClientesActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnFornecedores">
       <Properties>
@@ -121,6 +118,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Fornecedores"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFornecedoresActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnEntradas">
       <Properties>
@@ -129,6 +129,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Entradas"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEntradasActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnVendas">
       <Properties>
@@ -137,6 +140,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Vendas"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVendasActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnCadastrarProduto">
       <Properties>
@@ -145,6 +151,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="+"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCadastrarProdutoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnCadastrasEntrada">
       <Properties>
@@ -185,6 +194,17 @@
         </Property>
         <Property name="text" type="java.lang.String" value="CONTROLE DE ESTOQUE"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnFuncionario">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Lucida Grande" size="24" style="1"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Funcionario"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFuncionarioActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

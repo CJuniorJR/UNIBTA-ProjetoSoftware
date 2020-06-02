@@ -118,7 +118,7 @@ public class FormVendaView extends javax.swing.JFrame {
     
     public void ConsultarProdutos(){
         try {
-            dpdCliente.removeAllItems();
+            dpdCliente.removeAllItems();    
             this.produtosCarregados = produtoController.Consultar();
             for (Produto produto : this.produtosCarregados){
                 dpdProduto.addItem(produto.getNome());
@@ -169,6 +169,7 @@ public class FormVendaView extends javax.swing.JFrame {
         tblItens = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);

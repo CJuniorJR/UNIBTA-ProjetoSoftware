@@ -27,7 +27,7 @@ import javax.swing.table.DefaultTableModel;
  * @author guilhermemarques
  */
 public class FormOrigemView extends javax.swing.JFrame {
-
+        boolean isViewing = false;
         ProdutoController produtoController = new ProdutoController();
         ClienteController clienteController = new ClienteController();
         FornecedorController fornecedorController = new FornecedorController();
@@ -112,6 +112,7 @@ public class FormOrigemView extends javax.swing.JFrame {
         lblNomeFornecedor = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -304,38 +305,24 @@ public class FormOrigemView extends javax.swing.JFrame {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         Produto produto = new Produto();
 
-        if(!isEditing) {
+        if(!isViewing) {
             try {
                 produto.setCategoria(new Categoria(dpdProduto.getSelectedItem().toString()));
                 produto.setTipoProduto(new TipoProduto(dpdCliente.getSelectedItem().toString()));
                 produto.setNome(txtNome.getText());
-                produto.setDescricao(txtDescricao.getText());
-                produto.setPreco(Double.parseDouble(txtPreco.getText()));
+                //produto.setDescricao(txtDescricao.getText());
+                //produto.setPreco(Double.parseDouble(txtPreco.getText()));
 
                 produtoController.Salvar(produto);
 
                 this.setVisible(false);
-                produtoView.ConsultarProdutos();
+                //produtoView.ConsultarProdutos();
 
             } catch (SQLException ex) {
                 Logger.getLogger(FormProdutoView.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            try {
-                this.produtoEdit.setCategoria(new Categoria(dpdProduto.getSelectedItem().toString()));
-                this.produtoEdit.setTipoProduto(new TipoProduto(dpdCliente.getSelectedItem().toString()));
-                this.produtoEdit.setNome(txtNome.getText());
-                this.produtoEdit.setDescricao(txtDescricao.getText());
-                this.produtoEdit.setPreco(Double.parseDouble(txtPreco.getText()));
-
-                produtoController.Editar(this.produtoEdit);
-
-                this.setVisible(false);
-                produtoView.ConsultarProdutos();
-
-            } catch (SQLException ex) {
-                Logger.getLogger(FormProdutoView.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            
 
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
