@@ -134,7 +134,7 @@ public class FuncionarioView extends javax.swing.JFrame {
                         .addComponent(btnCadastrar)
                         .addGap(38, 38, 38)
                         .addComponent(btnEditar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
                         .addComponent(btnExcluir)
                         .addGap(74, 74, 74)
                         .addComponent(btnVoltar)))
@@ -151,7 +151,7 @@ public class FuncionarioView extends javax.swing.JFrame {
                     .addComponent(btnExcluir)
                     .addComponent(btnVoltar)
                     .addComponent(btnEditar))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         pack();

@@ -20,7 +20,7 @@ public class ProdutoController extends javax.swing.JFrame {
     Connection conn = Conexao.getConexaoMySQL();
     
      public void Salvar(Produto produto) throws SQLException {
-        String sql = "INSERT INTO tbProduto (Nome, Descricao, Preco, IdTipoProduto, IdCategoria) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO tbProduto (Nome, Descricao, Preco, IdTipoProduto, IdCategoria, Quantidade) VALUES (?,?,?,?,?,0)";
         
         conn = Conexao.getConexaoMySQL();
         

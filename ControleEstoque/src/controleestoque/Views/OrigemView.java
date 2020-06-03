@@ -130,7 +130,7 @@ public class OrigemView extends javax.swing.JFrame {
                         .addComponent(btnVoltar)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(186, 186, 186)
+                .addGap(204, 204, 204)
                 .addComponent(lblTitulo)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );

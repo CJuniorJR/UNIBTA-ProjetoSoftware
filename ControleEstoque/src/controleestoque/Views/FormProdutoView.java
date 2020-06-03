@@ -83,6 +83,7 @@ public class FormProdutoView extends javax.swing.JFrame {
     public void ConsultarCategorias(){
         ArrayList<Categoria> categorias = new ArrayList<Categoria>();
         try {
+            dpdCategoria.removeAllItems();
             categorias = categoriaController.Consultar();
             for (Categoria categoria : categorias){
                 dpdCategoria.addItem(categoria.getDescricao());
@@ -95,6 +96,7 @@ public class FormProdutoView extends javax.swing.JFrame {
     public void ConsultarTipos(){
         ArrayList<TipoProduto> tipos = new ArrayList<TipoProduto>();
         try{
+            dpdTipo.removeAllItems();
             tipos = tipoController.Consultar();
             for(TipoProduto tipoProduto : tipos){
                 dpdTipo.addItem(tipoProduto.getDescricao());
