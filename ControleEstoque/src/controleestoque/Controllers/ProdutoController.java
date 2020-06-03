@@ -17,12 +17,12 @@ import java.util.ArrayList;
  * @author guilhermemarques
  */
 public class ProdutoController extends javax.swing.JFrame {
-    Connection conn;
+    Connection conn = Conexao.getConexaoMySQL();
     
      public void Salvar(Produto produto) throws SQLException {
         String sql = "INSERT INTO tbProduto (Nome, Descricao, Preco, IdTipoProduto, IdCategoria) VALUES (?,?,?,?,?)";
         
-        conn = Conexao.getConexaoMySQL();
+
         
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setString(1, produto.getNome());
@@ -43,7 +43,7 @@ public class ProdutoController extends javax.swing.JFrame {
     public ArrayList<Produto> Consultar() throws SQLException {
         String sql = "SELECT * FROM tbProduto";
  
-        conn = Conexao.getConexaoMySQL();
+
         
         PreparedStatement statement = conn.prepareStatement(sql);
         ResultSet result = statement.executeQuery(sql);
@@ -56,19 +56,20 @@ public class ProdutoController extends javax.swing.JFrame {
                             result.getString("Descricao"),
                             result.getDouble("Preco"),
                             result.getString("IdCategoria"),
-                            result.getString("IdTipoProduto")
+                            result.getString("IdTipoProduto"),
+                            result.getInt("Quantidade")
                     )
             );
         }
         
-        Conexao.FecharConexao();
+
        return produtos;
    }
     
     public Produto Consultar(int idProduto) throws SQLException {
         String sql = "SELECT * from tbProduto WHERE IdProduto=?;";
         
-        conn = Conexao.getConexaoMySQL();
+
         
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, idProduto);
@@ -84,7 +85,7 @@ public class ProdutoController extends javax.swing.JFrame {
             produto.setTipoProduto(new TipoProduto(result.getString("IdTipoProduto")));
         }
         
-        Conexao.FecharConexao();
+
        return produto;
     }
     

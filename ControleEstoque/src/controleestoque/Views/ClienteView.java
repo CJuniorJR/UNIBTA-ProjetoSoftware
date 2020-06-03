@@ -114,6 +114,11 @@ public class ClienteView extends javax.swing.JFrame {
         });
 
         btnVoltar.setText("Voltar");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -189,6 +194,10 @@ public class ClienteView extends javax.swing.JFrame {
         
         clienteView.setVisible(true);
     }//GEN-LAST:event_btnCadastrarActionPerformed
+
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_btnVoltarActionPerformed
     
     /**
      * @param args the command line arguments

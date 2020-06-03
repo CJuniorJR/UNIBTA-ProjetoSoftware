@@ -29,6 +29,7 @@ public class FormProdutoView extends javax.swing.JFrame {
     CategoriaController categoriaController = new CategoriaController();
     TipoController tipoController = new TipoController();
     FormVendaView formVendaView = null;
+    FormOrigemView formOrigemView = null;
     boolean isEditing = false;
     
     
@@ -39,6 +40,12 @@ public class FormProdutoView extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.formVendaView = formVendaview;
+    }
+    
+    public FormProdutoView(FormOrigemView formOrigemView) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.formOrigemView = formOrigemView;
     }
     
     public FormProdutoView() {
@@ -325,6 +332,9 @@ public class FormProdutoView extends javax.swing.JFrame {
                 
                 if(formVendaView != null)
                     formVendaView.ConsultarProdutos();
+                
+                if(formOrigemView != null)
+                    formOrigemView.ConsultarProdutos();
                 
                 this.setVisible(false);
             } catch (SQLException ex) {

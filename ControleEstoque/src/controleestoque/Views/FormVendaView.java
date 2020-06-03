@@ -118,7 +118,7 @@ public class FormVendaView extends javax.swing.JFrame {
     
     public void ConsultarProdutos(){
         try {
-            dpdCliente.removeAllItems();    
+            dpdProduto.removeAllItems();    
             this.produtosCarregados = produtoController.Consultar();
             for (Produto produto : this.produtosCarregados){
                 dpdProduto.addItem(produto.getNome());

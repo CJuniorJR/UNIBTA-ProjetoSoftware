@@ -49,6 +49,7 @@ public class FormCategoriaView extends javax.swing.JFrame {
     
     public FormCategoriaView(FormProdutoView produtoView) {
         initComponents();
+        this.setLocationRelativeTo(null);
         this.formProdutoView = produtoView;
         label.setText("Cadastrar Categoria");
     }

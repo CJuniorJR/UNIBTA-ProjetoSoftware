@@ -17,12 +17,12 @@ import java.util.ArrayList;
  * @author sedden
  */
 public class FuncionarioController {
-    Connection conn;
+   Connection conn = Conexao.getConexaoMySQL();
     
     public void Salvar(Funcionario funcionario) throws SQLException {
         String sql = "INSERT INTO tbFuncionario (Nome, RG, Cpf, DataNascimento, Email, Rua, Logradouro, Cep, Numero, Bairro, Cidade, Senha) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
         
-        conn = Conexao.getConexaoMySQL();
+
         
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setString(1, funcionario.getNome());
@@ -50,7 +50,7 @@ public class FuncionarioController {
     public ArrayList<Funcionario> Consultar() throws SQLException {
         String sql = "SELECT * FROM tbFuncionario";
  
-        conn = Conexao.getConexaoMySQL();
+
         
         PreparedStatement statement = conn.prepareStatement(sql);
         ResultSet result = statement.executeQuery(sql);
@@ -75,14 +75,14 @@ public class FuncionarioController {
             );
         }
         
-        Conexao.FecharConexao();
+
        return funcionarios;
    }
     
     public Funcionario Consultar(int idFuncionario) throws SQLException {
         String sql = "SELECT * from tbFuncionario WHERE IdFuncionario=?;";
         
-        conn = Conexao.getConexaoMySQL();
+
         
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, idFuncionario);
@@ -105,7 +105,7 @@ public class FuncionarioController {
             funcionario.setSenha(result.getString("Senha"));
         }
         
-        Conexao.FecharConexao();
+
        return funcionario;
     }
     

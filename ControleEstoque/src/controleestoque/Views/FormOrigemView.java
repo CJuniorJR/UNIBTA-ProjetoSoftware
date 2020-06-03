@@ -7,20 +7,20 @@ package controleestoque.Views;
 import controleestoque.Controllers.ProdutoController;
 import controleestoque.Controllers.ClienteController;
 import controleestoque.Controllers.FornecedorController;
-import controleestoque.Controllers.CategoriaController;
-import controleestoque.Controllers.TipoController;
+import controleestoque.Controllers.OrigemController;
 import controleestoque.Models.Produto;
 import controleestoque.Models.Cliente;
-import controleestoque.Models.Categoria;
 import  controleestoque.Models.Fornecedor;
-import controleestoque.Models.TipoProduto;
+import controleestoque.Models.Origem;
 import controleestoque.Views.ProdutoView;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 
 /**
  *
@@ -28,9 +28,13 @@ import javax.swing.table.DefaultTableModel;
  */
 public class FormOrigemView extends javax.swing.JFrame {
         boolean isViewing = false;
+        OrigemController origemController = new OrigemController();
         ProdutoController produtoController = new ProdutoController();
         ClienteController clienteController = new ClienteController();
         FornecedorController fornecedorController = new FornecedorController();
+        FormProdutoView formProdutoView = null;
+        OrigemView origemView = null;
+
 
     /**
      * Creates new form FormOrigemView
@@ -38,6 +42,22 @@ public class FormOrigemView extends javax.swing.JFrame {
     public FormOrigemView() {
         initComponents();
         this.setLocationRelativeTo(null);
+    }
+    
+    public FormOrigemView(OrigemView origemView) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.origemView = origemView;
+    }
+    
+    
+    public void FormatarCampos() {
+        try {            
+            MaskFormatter data = new MaskFormatter("##/##/####");
+            data.install(txtData);
+        } catch (ParseException ex) {
+            Logger.getLogger(FormOrigemView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
         public void ConsultarProdutos(){
@@ -97,9 +117,9 @@ public class FormOrigemView extends javax.swing.JFrame {
         lblProduto = new javax.swing.JLabel();
         dpdProduto = new javax.swing.JComboBox<>();
         btnProduto = new javax.swing.JButton();
-        lblNome = new javax.swing.JLabel();
+        lblQuantidade = new javax.swing.JLabel();
         lblOrigem = new javax.swing.JLabel();
-        txtNome = new javax.swing.JTextField();
+        txtQuantidade = new javax.swing.JTextField();
         lblData = new javax.swing.JLabel();
         txtData = new javax.swing.JFormattedTextField();
         lblNomeCliente = new javax.swing.JLabel();
@@ -154,11 +174,11 @@ public class FormOrigemView extends javax.swing.JFrame {
             }
         });
 
-        lblNome.setText("Quantidade");
+        lblQuantidade.setText("Quantidade");
 
         lblOrigem.setText("Origem");
 
-        txtNome.setMinimumSize(new java.awt.Dimension(11, 30));
+        txtQuantidade.setMinimumSize(new java.awt.Dimension(11, 30));
 
         lblData.setText("Data");
 
@@ -211,51 +231,54 @@ public class FormOrigemView extends javax.swing.JFrame {
                 .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCancelar))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblNome)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblData)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblDescricao)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblPreco2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblProduto)
-                        .addGap(2, 2, 2)
-                        .addComponent(dpdProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblNomeFornecedor)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(dpdFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblOrigem)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(rbtnFornecedor)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rbtnCliente)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblNomeCliente)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(dpdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(0, 99, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(73, Short.MAX_VALUE)
                 .addComponent(lblTitulo)
                 .addGap(69, 69, 69))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblQuantidade)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblDescricao)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblPreco2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblProduto)
+                                .addGap(2, 2, 2)
+                                .addComponent(dpdProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblOrigem)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblData)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(88, 88, 88))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(rbtnCliente)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblNomeCliente)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(dpdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(rbtnFornecedor)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblNomeFornecedor)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(dpdFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(0, 118, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -268,22 +291,21 @@ public class FormOrigemView extends javax.swing.JFrame {
                     .addComponent(dpdProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnProduto))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblOrigem)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblOrigem)
-                    .addComponent(rbtnFornecedor)
+                    .addComponent(lblNomeFornecedor)
+                    .addComponent(dpdFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rbtnFornecedor))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNomeCliente)
+                    .addComponent(dpdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rbtnCliente))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblNomeCliente)
-                        .addComponent(dpdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblNomeFornecedor)
-                        .addComponent(dpdFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNome)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblQuantidade)
+                    .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDescricao)
@@ -303,28 +325,32 @@ public class FormOrigemView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        Produto produto = new Produto();
-
-        if(!isViewing) {
+        Origem origem = new Origem();
             try {
-                produto.setCategoria(new Categoria(dpdProduto.getSelectedItem().toString()));
-                produto.setTipoProduto(new TipoProduto(dpdCliente.getSelectedItem().toString()));
-                produto.setNome(txtNome.getText());
-                //produto.setDescricao(txtDescricao.getText());
-                //produto.setPreco(Double.parseDouble(txtPreco.getText()));
+                if (rbtnFornecedor.isSelected()) {
+                    origem.setFornecedor(new Fornecedor(dpdFornecedor.getSelectedItem().toString()));
+                    origem.setCliente(new Cliente (""));
+                }
+                else{
+                    origem.setCliente(new Cliente(dpdCliente.getSelectedItem().toString()));
+                    origem.setFornecedor(new Fornecedor(""));
+                }
+                origem.setProduto(new Produto(dpdProduto.getSelectedItem().toString()));
+                origem.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
+                origem.setTotal(Double.parseDouble(txtTotal.getText()));
+                origem.setData(txtData.getText());
 
-                produtoController.Salvar(produto);
+                origemController.Salvar(origem);
+                if (this.origemView != null) {
+                    this.origemView.ConsultarOrigem();
+                }
+                      
 
                 this.setVisible(false);
-                //produtoView.ConsultarProdutos();
-
+                
             } catch (SQLException ex) {
                 Logger.getLogger(FormProdutoView.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else {
-            
-
-        }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -349,6 +375,7 @@ public class FormOrigemView extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDataActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+       FormatarCampos();
        CarregarOrigem();
        ConsultarProdutos();
     }//GEN-LAST:event_formWindowOpened
@@ -419,17 +446,17 @@ public class FormOrigemView extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> dpdProduto;
     private javax.swing.JLabel lblData;
     private javax.swing.JLabel lblDescricao;
-    private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblNomeCliente;
     private javax.swing.JLabel lblNomeFornecedor;
     private javax.swing.JLabel lblOrigem;
     private javax.swing.JLabel lblPreco2;
     private javax.swing.JLabel lblProduto;
+    private javax.swing.JLabel lblQuantidade;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JRadioButton rbtnCliente;
     private javax.swing.JRadioButton rbtnFornecedor;
     private javax.swing.JFormattedTextField txtData;
-    private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtQuantidade;
     private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 }

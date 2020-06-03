@@ -15,13 +15,13 @@ import java.util.ArrayList;
  * @author sedden
  */
 public class CategoriaController {
-   Connection conn;
+   Connection conn = Conexao.getConexaoMySQL();
    
    
    public void Salvar(Categoria categoria) throws SQLException {
        String sql = "INSERT INTO tbCategoria (Descricao) VALUES (?)";
        
-       conn = Conexao.getConexaoMySQL();
+
        
        PreparedStatement statement = conn.prepareStatement(sql);
        statement.setString(1, categoria.getDescricao());
@@ -32,13 +32,13 @@ public class CategoriaController {
        } else {
            System.out.println("Erro ao salvar a categoria.");
        }
-       Conexao.FecharConexao();
+
    }
    
    public ArrayList<Categoria> Consultar() throws SQLException {
         String sql = "SELECT * FROM tbCategoria";
  
-        conn = Conexao.getConexaoMySQL();
+ 
         
         PreparedStatement statement = conn.prepareStatement(sql);
         ResultSet result = statement.executeQuery(sql);
@@ -47,14 +47,14 @@ public class CategoriaController {
             categorias.add(new Categoria(result.getInt("IdCategoria"), result.getString("Descricao")));
         }
         
-        Conexao.FecharConexao();
+ 
        return categorias;
    }
    
    public void Editar(Categoria categoria) throws SQLException {
        String sql = "UPDATE tbCategoria SET Descricao=? WHERE IdCategoria=?";
        
-       conn = Conexao.getConexaoMySQL();
+
        
        PreparedStatement statement = conn.prepareStatement(sql);
        statement.setString(1, categoria.getDescricao());
@@ -67,7 +67,7 @@ public class CategoriaController {
             System.out.println("Erro ao atualizar a categoria.");
        }
        
-       Conexao.FecharConexao();
+
    }
    
    public void Excluir(Categoria categoria) throws SQLException {

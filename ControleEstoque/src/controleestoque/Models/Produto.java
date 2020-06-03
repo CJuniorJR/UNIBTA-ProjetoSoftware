@@ -26,13 +26,14 @@ public class Produto {
     }
     
     // Construtor para carregar Produto
-    public Produto(int id, String nome, String descricao, double preco, String categoria, String tipoProduto){
+    public Produto(int id, String nome, String descricao, double preco, String categoria, String tipoProduto, int quantidade){
         this.ID = id;
         this.Nome = nome;
         this.Descricao = descricao;
         this.Preco = preco;
         this.setCategoria(new Categoria(categoria));
         this.setTipoProduto(new TipoProduto(tipoProduto));
+        this.Quantidade = quantidade;
     }
     
     

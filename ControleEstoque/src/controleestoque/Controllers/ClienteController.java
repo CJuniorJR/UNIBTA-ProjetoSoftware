@@ -14,12 +14,12 @@ import java.time.*;
  * @author sedden
  */
 public class ClienteController {
-    Connection conn;
+   Connection conn = Conexao.getConexaoMySQL();
     
     public void Salvar(Cliente cliente) throws SQLException {
         String sql = "INSERT INTO tbCliente (Nome, RG, Cpf, DataNascimento, Email, Rua, Logradouro, Cep, Numero, Bairro, Cidade) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
         
-        conn = Conexao.getConexaoMySQL();
+
         
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setString(1, cliente.getNome());
@@ -40,13 +40,13 @@ public class ClienteController {
         } else {
             System.out.println("Erro ao salvar o cliente.");
         }
-       Conexao.FecharConexao();
+
     }
     
     public ArrayList<Cliente> Consultar() throws SQLException {
         String sql = "SELECT * FROM tbCliente";
  
-        conn = Conexao.getConexaoMySQL();
+
         
         PreparedStatement statement = conn.prepareStatement(sql);
         ResultSet result = statement.executeQuery(sql);
@@ -68,16 +68,17 @@ public class ClienteController {
                             result.getString("Cidade")
                     )
             );
+            System.out.println(result.getString("Nome"));
         }
         
-        Conexao.FecharConexao();
+ 
        return clientes;
    }
     
     public Cliente Consultar(int idCliente) throws SQLException {
         String sql = "SELECT * from tbCliente WHERE IdCliente=?;";
         
-        conn = Conexao.getConexaoMySQL();
+
         
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, idCliente);
@@ -99,7 +100,7 @@ public class ClienteController {
             cliente.setCidade(result.getString("Cidade"));
         }
         
-        Conexao.FecharConexao();
+ 
        return cliente;
     }
     
@@ -141,7 +142,7 @@ public class ClienteController {
             System.out.println("Erro ao atualizar o cliente.");
        }
        
-       Conexao.FecharConexao();
+
    }
     
        public void Excluir(int id) throws SQLException {

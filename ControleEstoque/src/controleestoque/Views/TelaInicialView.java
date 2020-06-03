@@ -33,11 +33,6 @@ public class TelaInicialView extends javax.swing.JFrame {
         btnFornecedores = new javax.swing.JButton();
         btnEntradas = new javax.swing.JButton();
         btnVendas = new javax.swing.JButton();
-        btnCadastrarProduto = new javax.swing.JButton();
-        btnCadastrasEntrada = new javax.swing.JButton();
-        btnCadastrarCliente = new javax.swing.JButton();
-        btnCadastrarFornecedor = new javax.swing.JButton();
-        btnNovaVenda = new javax.swing.JButton();
         lblTitulo = new javax.swing.JLabel();
         btnFuncionario = new javax.swing.JButton();
 
@@ -83,26 +78,6 @@ public class TelaInicialView extends javax.swing.JFrame {
             }
         });
 
-        btnCadastrarProduto.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
-        btnCadastrarProduto.setText("+");
-        btnCadastrarProduto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCadastrarProdutoActionPerformed(evt);
-            }
-        });
-
-        btnCadastrasEntrada.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
-        btnCadastrasEntrada.setText("+");
-
-        btnCadastrarCliente.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
-        btnCadastrarCliente.setText("+");
-
-        btnCadastrarFornecedor.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
-        btnCadastrarFornecedor.setText("+");
-
-        btnNovaVenda.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
-        btnNovaVenda.setText("+");
-
         lblTitulo.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         lblTitulo.setText("CONTROLE DE ESTOQUE");
 
@@ -127,22 +102,13 @@ public class TelaInicialView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(btnCadastrarCliente)
-                                .addComponent(btnNovaVenda, javax.swing.GroupLayout.Alignment.TRAILING))
-                            .addComponent(btnCadastrarProduto))
-                        .addGap(87, 87, 87)
+                        .addGap(162, 162, 162)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnFornecedores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnEntradas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnFuncionario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnCadastrasEntrada)
-                            .addComponent(btnCadastrarFornecedor)))
+                            .addComponent(btnFuncionario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(lblTitulo))
-                .addGap(0, 56, Short.MAX_VALUE))
+                .addGap(0, 137, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,19 +118,14 @@ public class TelaInicialView extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnProdutos)
-                    .addComponent(btnCadastrarProduto)
-                    .addComponent(btnEntradas)
-                    .addComponent(btnCadastrasEntrada))
+                    .addComponent(btnEntradas))
                 .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnClientes)
-                    .addComponent(btnCadastrarCliente)
-                    .addComponent(btnFornecedores)
-                    .addComponent(btnCadastrarFornecedor))
+                    .addComponent(btnFornecedores))
                 .addGap(56, 56, 56)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnVendas)
-                    .addComponent(btnNovaVenda)
                     .addComponent(btnFuncionario))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
@@ -172,10 +133,6 @@ public class TelaInicialView extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnCadastrarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarProdutoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCadastrarProdutoActionPerformed
 
     private void btnFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFuncionarioActionPerformed
         FuncionarioView funcionarioView = new FuncionarioView();
@@ -249,15 +206,10 @@ public class TelaInicialView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCadastrarCliente;
-    private javax.swing.JButton btnCadastrarFornecedor;
-    private javax.swing.JButton btnCadastrarProduto;
-    private javax.swing.JButton btnCadastrasEntrada;
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnEntradas;
     private javax.swing.JButton btnFornecedores;
     private javax.swing.JButton btnFuncionario;
-    private javax.swing.JButton btnNovaVenda;
     private javax.swing.JButton btnProdutos;
     private javax.swing.JButton btnVendas;
     private javax.swing.JLabel lblTitulo;

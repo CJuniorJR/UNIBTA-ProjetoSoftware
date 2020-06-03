@@ -94,7 +94,7 @@ public class VendaView extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblVenda);
 
-        btnCadastrar.setText("Cadastrar");
+        btnCadastrar.setText("Nova venda");
         btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCadastrarActionPerformed(evt);
@@ -102,6 +102,11 @@ public class VendaView extends javax.swing.JFrame {
         });
 
         btnVoltar.setText("Voltar");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
 
         lblTitulo.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         lblTitulo.setText("Vendas");
@@ -176,6 +181,10 @@ public class VendaView extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_btnVisualizarActionPerformed
+
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_btnVoltarActionPerformed
 
     /**
      * @param args the command line arguments

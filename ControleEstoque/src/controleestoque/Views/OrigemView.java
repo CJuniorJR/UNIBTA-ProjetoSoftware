@@ -21,6 +21,7 @@ import java.util.logging.Logger;
  * @author guilhermemarques
  */
 public class OrigemView extends javax.swing.JFrame {
+    OrigemController controller = new OrigemController();
 
     /**
      * Creates new form OrigemView
@@ -28,6 +29,30 @@ public class OrigemView extends javax.swing.JFrame {
     public OrigemView() {
         initComponents();
         this.setLocationRelativeTo(null);
+    }
+    
+        public void ConsultarOrigem() {
+        ArrayList<Origem> origens = new ArrayList<Origem>();
+        DefaultTableModel model =(DefaultTableModel) tblOrigem.getModel();
+        model.setNumRows(0);
+        
+        try {
+            origens.addAll(controller.Consultar());
+        } catch (SQLException ex) {
+            Logger.getLogger(OrigemView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        for (Origem origem : origens) {
+            model.addRow(new Object[] 
+            { 
+               //retorna os dados da tabela do BD, cada campo e um coluna.
+               origem.getID(),
+               origem.getProduto().getNome(),
+               !origem.getFornecedor().getNome().equals("") ? origem.getFornecedor().getNome() : origem.getCliente().getNome(),
+               origem.getQuantidade(),
+               origem.getData(),
+            });
+        }
     }
 
     /**
@@ -47,6 +72,11 @@ public class OrigemView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         tblOrigem.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -77,6 +107,11 @@ public class OrigemView extends javax.swing.JFrame {
         });
 
         btnVoltar.setText("Voltar");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
 
         lblTitulo.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         lblTitulo.setText("Entradas");
@@ -117,10 +152,18 @@ public class OrigemView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        FormOrigemView origemView = new FormOrigemView();
+        FormOrigemView origemView = new FormOrigemView(this);
 
         origemView.setVisible(true);
     }//GEN-LAST:event_btnCadastrarActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        ConsultarOrigem();
+    }//GEN-LAST:event_formWindowOpened
+
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_btnVoltarActionPerformed
 
     /**
      * @param args the command line arguments

@@ -17,12 +17,12 @@ import java.util.ArrayList;
  * @author guilhermemarques
  */
 public class VendaController {
-    Connection conn;
+    Connection conn = Conexao.getConexaoMySQL();
     
     public void SalvarProdutoVenda(ProdutoVenda produtoVenda, int idVenda) throws SQLException {
         String sql = "INSERT INTO tbProdutoVenda (IdProduto, Quantidade, Total, IdVenda) VALUES(?, ?, ?, ?)";
         
-        conn = Conexao.getConexaoMySQL();
+
         
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setString(1, produtoVenda.getProduto().getNome());
@@ -38,13 +38,13 @@ public class VendaController {
         } else {
             System.out.println("Erro ao salvar a venda.");
         }
-       Conexao.FecharConexao();
+
     }
     
      public void Salvar(Venda venda, ArrayList<ProdutoVenda> produtosVenda) throws SQLException {
         String sql = "INSERT INTO tbVenda (Total, IdCliente, FormaPagamento, Data) VALUES (?,?,?,?)";
         
-        conn = Conexao.getConexaoMySQL();
+
         
         PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         statement.setDouble(1, venda.getTotal());
@@ -57,6 +57,7 @@ public class VendaController {
         if (rs.next()) {
             for (ProdutoVenda produtoVenda : produtosVenda) {
                 SalvarProdutoVenda(produtoVenda, rs.getInt("LAST_INSERT_ID()")); 
+                SubtrairQuantidadeProduto(produtoVenda);
             }
             
             System.out.println("Venda salva com sucesso!");
@@ -64,13 +65,31 @@ public class VendaController {
         } else {
             System.out.println("Erro ao salvar a venda.");
         }
-       Conexao.FecharConexao();
     }
+     
+    public void SubtrairQuantidadeProduto(ProdutoVenda produto) throws SQLException {
+        String sql = "UPDATE tbProduto SET Quantidade = Quantidade - ? WHERE Nome = ?";
+
+        
+        PreparedStatement statement = conn.prepareStatement(sql);
+        
+        statement.setInt(1, produto.getQuantidade());
+        statement.setString(2, produto.getProduto().getNome());
+        int rowsUpdated = statement.executeUpdate();
+        if (rowsUpdated > 0){
+            System.out.println("Quantidade de produto atualizada com sucesso!");
+        } else{
+            System.out.println("Erro ao atualizar a quantidade de produtos!");
+        }
+        
+
+         
+     }
     
     public ArrayList<Venda> Consultar() throws SQLException {
         String sql = "SELECT * FROM tbVenda";
  
-        conn = Conexao.getConexaoMySQL();
+
         
         PreparedStatement statement = conn.prepareStatement(sql);
         ResultSet result = statement.executeQuery(sql);
@@ -87,14 +106,14 @@ public class VendaController {
             );
         }
         
-        Conexao.FecharConexao();
+
        return vendas;
    }
     
     public Venda Consultar(int idVenda) throws SQLException {
         String sql = "SELECT * from tbVenda WHERE IdVenda=?;";
         
-        conn = Conexao.getConexaoMySQL();
+
         
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, idVenda);
@@ -109,7 +128,7 @@ public class VendaController {
             venda.setData(result.getString("Data"));
         }
         
-        Conexao.FecharConexao();
+
        return venda;
     }
     
@@ -130,7 +149,7 @@ public class VendaController {
     public ArrayList<ProdutoVenda> ConsultarProdutosVenda(int idVenda) throws SQLException {
         String sql = "SELECT * from tbProdutoVenda WHERE IdVenda=?;";
         
-        conn = Conexao.getConexaoMySQL();
+
         
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, idVenda);
@@ -147,7 +166,7 @@ public class VendaController {
             );
         }
         
-        Conexao.FecharConexao();
+
        return produtosVenda;
     }
 }
