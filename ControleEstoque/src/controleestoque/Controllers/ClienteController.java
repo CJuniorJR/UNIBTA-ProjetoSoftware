@@ -14,12 +14,12 @@ import java.time.*;
  * @author sedden
  */
 public class ClienteController {
-   Connection conn = Conexao.getConexaoMySQL();
+   Connection conn = null;
     
     public void Salvar(Cliente cliente) throws SQLException {
         String sql = "INSERT INTO tbCliente (Nome, RG, Cpf, DataNascimento, Email, Rua, Logradouro, Cep, Numero, Bairro, Cidade) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
         
-
+        conn = Conexao.getConexaoMySQL();
         
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setString(1, cliente.getNome());
@@ -41,12 +41,13 @@ public class ClienteController {
             System.out.println("Erro ao salvar o cliente.");
         }
 
+        conn.close();
     }
     
     public ArrayList<Cliente> Consultar() throws SQLException {
         String sql = "SELECT * FROM tbCliente";
  
-
+        conn = Conexao.getConexaoMySQL();
         
         PreparedStatement statement = conn.prepareStatement(sql);
         ResultSet result = statement.executeQuery(sql);
@@ -71,14 +72,14 @@ public class ClienteController {
             System.out.println(result.getString("Nome"));
         }
         
- 
+        conn.close();
        return clientes;
    }
     
     public Cliente Consultar(int idCliente) throws SQLException {
         String sql = "SELECT * from tbCliente WHERE IdCliente=?;";
         
-
+        conn = Conexao.getConexaoMySQL();
         
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, idCliente);
@@ -100,7 +101,7 @@ public class ClienteController {
             cliente.setCidade(result.getString("Cidade"));
         }
         
- 
+        conn.close();
        return cliente;
     }
     
@@ -142,11 +143,13 @@ public class ClienteController {
             System.out.println("Erro ao atualizar o cliente.");
        }
        
-
+       conn.close();
    }
     
        public void Excluir(int id) throws SQLException {
         String sql = "DELETE FROM tbCliente WHERE IdCliente=?";
+        
+        conn = Conexao.getConexaoMySQL();
  
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, id);
@@ -157,5 +160,7 @@ public class ClienteController {
         } else {
             System.out.println("Erro ao excluir o cliente.");
         }
+        
+        conn.close();
     }
 }

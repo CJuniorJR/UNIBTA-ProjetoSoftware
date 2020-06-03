@@ -22,7 +22,7 @@ public class ProdutoController extends javax.swing.JFrame {
      public void Salvar(Produto produto) throws SQLException {
         String sql = "INSERT INTO tbProduto (Nome, Descricao, Preco, IdTipoProduto, IdCategoria) VALUES (?,?,?,?,?)";
         
-
+        conn = Conexao.getConexaoMySQL();
         
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setString(1, produto.getNome());
@@ -37,13 +37,15 @@ public class ProdutoController extends javax.swing.JFrame {
         } else {
             System.out.println("Erro ao salvar o produto.");
         }
+        
+        conn.close();
        Conexao.FecharConexao();
     }
     
     public ArrayList<Produto> Consultar() throws SQLException {
         String sql = "SELECT * FROM tbProduto";
  
-
+        conn = Conexao.getConexaoMySQL();
         
         PreparedStatement statement = conn.prepareStatement(sql);
         ResultSet result = statement.executeQuery(sql);
@@ -62,14 +64,14 @@ public class ProdutoController extends javax.swing.JFrame {
             );
         }
         
-
+        conn.close();
        return produtos;
    }
     
     public Produto Consultar(int idProduto) throws SQLException {
         String sql = "SELECT * from tbProduto WHERE IdProduto=?;";
         
-
+        conn = Conexao.getConexaoMySQL();
         
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, idProduto);
@@ -85,7 +87,7 @@ public class ProdutoController extends javax.swing.JFrame {
             produto.setTipoProduto(new TipoProduto(result.getString("IdTipoProduto")));
         }
         
-
+        conn.close();
        return produto;
     }
     
@@ -115,12 +117,14 @@ public class ProdutoController extends javax.swing.JFrame {
             System.out.println("Erro ao atualizar o produto.");
        }
        
-       Conexao.FecharConexao();
+       conn.close();
    }
     
        public void Excluir(int id) throws SQLException {
         String sql = "DELETE FROM tbProduto WHERE IdProduto=?";
  
+        conn = Conexao.getConexaoMySQL();
+        
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, id);
 
@@ -130,5 +134,7 @@ public class ProdutoController extends javax.swing.JFrame {
         } else {
             System.out.println("Erro ao excluir o produto.");
         }
+        
+        conn.close();
     }
 }

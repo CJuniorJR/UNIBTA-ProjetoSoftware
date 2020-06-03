@@ -336,7 +336,7 @@ public class FormProdutoView extends javax.swing.JFrame {
                 if(formOrigemView != null)
                     formOrigemView.ConsultarProdutos();
                 
-                this.setVisible(false);
+                this.dispose();
             } catch (SQLException ex) {
                 Logger.getLogger(FormProdutoView.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -350,7 +350,7 @@ public class FormProdutoView extends javax.swing.JFrame {
                 
                 produtoController.Editar(this.produtoEdit);
 
-                this.setVisible(false);
+                this.dispose();
                 produtoView.ConsultarProdutos();
                 
             } catch (SQLException ex) {
@@ -361,7 +361,7 @@ public class FormProdutoView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**

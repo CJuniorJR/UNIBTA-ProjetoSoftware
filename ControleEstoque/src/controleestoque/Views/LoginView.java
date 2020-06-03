@@ -108,10 +108,12 @@ public class LoginView extends javax.swing.JFrame {
         try {
             funcionario = controller.Login(this.txtEmail.getText(), this.txtSenha.getText());
             
-            if(funcionario != null) {
+            if(funcionario.getEmail().equals(txtEmail.getText()) && funcionario.getSenha().equals(txtSenha.getText())) {
                 TelaInicialView telaInicial = new TelaInicialView();
                 
                 telaInicial.setVisible(true);
+                
+                this.dispose();
             }
         } catch (SQLException ex) {
             Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);

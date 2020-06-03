@@ -378,7 +378,7 @@ public class FormVendaView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void dpdProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dpdProdutoActionPerformed
@@ -411,7 +411,7 @@ public class FormVendaView extends javax.swing.JFrame {
                     vendaView.ConsultarVendas();
                 }
                 
-                this.setVisible(false);
+                this.dispose();
             } catch (SQLException ex) {
                 Logger.getLogger(FormCategoriaView.class.getName()).log(Level.SEVERE, null, ex);
             }

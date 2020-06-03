@@ -330,7 +330,7 @@ public class FormFuncionarioView extends javax.swing.JFrame {
                         funcionarioView.ConsultarFuncionarios();
                     }
                     
-                    this.setVisible(false);
+                    this.dispose();
                 } catch (SQLException ex) {
                     Logger.getLogger(FormCategoriaView.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -357,7 +357,7 @@ public class FormFuncionarioView extends javax.swing.JFrame {
 
                     this.isEditing = false;
                     
-                    this.setVisible(false);
+                    this.dispose();
                 } catch (SQLException ex) {
                     Logger.getLogger(FormCategoriaView.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -368,7 +368,7 @@ public class FormFuncionarioView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened

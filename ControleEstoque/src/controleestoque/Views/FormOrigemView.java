@@ -77,7 +77,7 @@ public class FormOrigemView extends javax.swing.JFrame {
                 lblNomeCliente.setVisible(false);
                 dpdCliente.setVisible(false);
                 lblNomeFornecedor.setVisible(false);
-                dpdFornecedor.setVisible(false);                
+                dpdFornecedor.setVisible(false);               
             }
             
             try {
@@ -346,7 +346,7 @@ public class FormOrigemView extends javax.swing.JFrame {
                 }
                       
 
-                this.setVisible(false);
+                this.dispose();
                 
             } catch (SQLException ex) {
                 Logger.getLogger(FormProdutoView.class.getName()).log(Level.SEVERE, null, ex);
@@ -354,7 +354,7 @@ public class FormOrigemView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void dpdProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dpdProdutoActionPerformed

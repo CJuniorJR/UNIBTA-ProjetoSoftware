@@ -11,12 +11,12 @@ import java.sql.*;
  * @author sedden
  */
 public class LoginController {
-    Connection conn = Conexao.getConexaoMySQL();
+    Connection conn;
     
     public Funcionario Login(String email, String senha) throws SQLException {
         String sql = "SELECT * from tbFuncionario WHERE Email=? AND Senha=?";
         
-
+        conn = Conexao.getConexaoMySQL();
         
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setString(1, email);
@@ -40,7 +40,8 @@ public class LoginController {
             funcionario.setSenha(result.getString("Senha"));
         }
         
-
+       conn.close();
+       
        return funcionario;
     }
 }

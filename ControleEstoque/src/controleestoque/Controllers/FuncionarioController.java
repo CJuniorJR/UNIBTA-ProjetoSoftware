@@ -22,7 +22,7 @@ public class FuncionarioController {
     public void Salvar(Funcionario funcionario) throws SQLException {
         String sql = "INSERT INTO tbFuncionario (Nome, RG, Cpf, DataNascimento, Email, Rua, Logradouro, Cep, Numero, Bairro, Cidade, Senha) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
         
-
+        conn = Conexao.getConexaoMySQL();
         
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setString(1, funcionario.getNome());
@@ -44,13 +44,15 @@ public class FuncionarioController {
         } else {
             System.out.println("Erro ao salvar o funcionario.");
         }
+        
+        conn.close();
        Conexao.FecharConexao();
     }
     
     public ArrayList<Funcionario> Consultar() throws SQLException {
         String sql = "SELECT * FROM tbFuncionario";
  
-
+        conn = Conexao.getConexaoMySQL();
         
         PreparedStatement statement = conn.prepareStatement(sql);
         ResultSet result = statement.executeQuery(sql);
@@ -75,14 +77,14 @@ public class FuncionarioController {
             );
         }
         
-
+        conn.close();
        return funcionarios;
    }
     
     public Funcionario Consultar(int idFuncionario) throws SQLException {
         String sql = "SELECT * from tbFuncionario WHERE IdFuncionario=?;";
         
-
+        conn = Conexao.getConexaoMySQL();    
         
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, idFuncionario);
@@ -105,7 +107,7 @@ public class FuncionarioController {
             funcionario.setSenha(result.getString("Senha"));
         }
         
-
+        conn.close();
        return funcionario;
     }
     
@@ -149,12 +151,15 @@ public class FuncionarioController {
             System.out.println("Erro ao atualizar o funcionario.");
        }
        
+       conn.close();
        Conexao.FecharConexao();
    }
     
        public void Excluir(int id) throws SQLException {
         String sql = "DELETE FROM tbFuncionario WHERE IdFuncionario=?";
  
+        conn = Conexao.getConexaoMySQL();
+        
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, id);
 
@@ -164,5 +169,7 @@ public class FuncionarioController {
         } else {
             System.out.println("Erro ao excluir o funcionario.");
         }
+        
+        conn.close();
     }
 }

@@ -305,7 +305,7 @@ public class FormClienteView extends javax.swing.JFrame {
             try {
                 controller.Salvar(cliente);
                 
-                this.setVisible(false);
+                this.dispose();
                 
                 if(this.clienteView != null)
                     this.clienteView.ConsultarClientes();
@@ -333,7 +333,7 @@ public class FormClienteView extends javax.swing.JFrame {
             try {
                 controller.Editar(this.clienteEdit);
                 
-                this.setVisible(false);
+                this.dispose();
                 
                 clienteView.ConsultarClientes();
                 
@@ -351,7 +351,7 @@ public class FormClienteView extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     /**

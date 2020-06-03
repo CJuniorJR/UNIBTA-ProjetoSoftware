@@ -24,7 +24,7 @@ public class OrigemController extends javax.swing.JFrame {
     public void Salvar(Origem origem) throws SQLException {
         String sql = "INSERT INTO tbOrigem (IdFornecedor, IdCliente, IdProduto, Quantidade, Total, Data) VALUES (?,?,?,?,?,?)";
         
-
+        conn = Conexao.getConexaoMySQL();
         
         PreparedStatement statement = conn.prepareStatement(sql);
         if (!origem.getFornecedor().getNome().equals("")) { // origem.getCliente().getNome() != null
@@ -42,27 +42,27 @@ public class OrigemController extends javax.swing.JFrame {
         int rowsInserted = statement.executeUpdate();
         if (rowsInserted > 0) {
     
-            String sqlProduto = "UPDATE tbProduto SET Quantidade = ? WHERE Nome = ?";
+            String sqlProduto = "UPDATE tbProduto SET Quantidade = Quantidade + ? WHERE Nome = ?";
     
             statement = conn.prepareStatement(sqlProduto);
             statement.setInt(1, origem.getQuantidade());
             statement.setString(2, origem.getProduto().getNome());
             int rowsProdutoInserted = statement.executeUpdate();
             if (rowsProdutoInserted > 0) {
-        
                 System.out.println("Quantidade do produto salva com sucesso!");
-                this.AdicionarQuantidadeProduto(origem);
             }
             System.out.println("Origem salva com sucesso!");
         } else {
             System.out.println("Erro ao salvar a origem.");
         }
+        
+        conn.close();
     }
     
     public ArrayList<Origem> Consultar() throws SQLException {
         String sql = "SELECT * FROM tbOrigem";
  
-
+        conn = Conexao.getConexaoMySQL();
         
         PreparedStatement statement = conn.prepareStatement(sql);
         ResultSet result = statement.executeQuery(sql);
@@ -81,14 +81,14 @@ public class OrigemController extends javax.swing.JFrame {
             );
         }
         
-
+        conn.close();
        return origens;
    }
     
     public Origem Consultar(int idOrigem) throws SQLException {
         String sql = "SELECT * from tbOrigem WHERE IdOrigem=?;";
         
-
+        conn = Conexao.getConexaoMySQL();
         
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, idOrigem);
@@ -113,24 +113,8 @@ public class OrigemController extends javax.swing.JFrame {
             origem.setData(result.getString("Data"));
         }
         
-
+        conn.close();
        return origem;
-    }
-    
-    public void AdicionarQuantidadeProduto(Origem origem) throws SQLException {
-        String sql = "UPDATE tbProduto SET Quantidade = Quantidade + ? WHERE Nome = ?";
-
-        
-        PreparedStatement statement = conn.prepareStatement(sql);
-        
-        statement.setInt(1, origem.getQuantidade());
-        statement.setString(2, origem.getProduto().getNome());
-        int rowsUpdated = statement.executeUpdate();
-        if (rowsUpdated > 0){
-            System.out.println("Quantidade de produto atualizada com sucesso!");
-        } else{
-            System.out.println("Erro ao atualizar a quantidade de produtos!");
-        }
     }
     
 }

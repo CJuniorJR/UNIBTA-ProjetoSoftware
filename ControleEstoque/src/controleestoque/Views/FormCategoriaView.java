@@ -154,7 +154,7 @@ public class FormCategoriaView extends javax.swing.JFrame {
             try {
                 controller.Salvar(categoria);
 
-                this.setVisible(false); 
+                this.dispose(); 
 
                 if (categoriaView != null && formProdutoView == null){
                     categoriaView.ConsultarCategorias(); 
@@ -170,7 +170,7 @@ public class FormCategoriaView extends javax.swing.JFrame {
             try {
                 controller.Editar(this.categoria);
 
-                this.setVisible(false); 
+                this.dispose(); 
                 
                 this.isEditing = false;
 
@@ -192,7 +192,7 @@ public class FormCategoriaView extends javax.swing.JFrame {
     }//GEN-LAST:event_VerificarCategoriaCarregada
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**

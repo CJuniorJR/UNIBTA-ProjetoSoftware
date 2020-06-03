@@ -148,7 +148,7 @@ public class FormTipoProdutoView extends javax.swing.JFrame {
             try {
                 controller.Salvar(tipoProduto);
 
-                this.setVisible(false);
+                this.dispose();
 
                 if (tipoProdutoView != null && formProdutoView == null) {
                     tipoProdutoView.ConsultarTipos();
@@ -164,7 +164,7 @@ public class FormTipoProdutoView extends javax.swing.JFrame {
             try {
                 controller.Editar(this.tipoProduto);
 
-                this.setVisible(false);
+                this.dispose();
 
                 this.isEditing = false;
 
@@ -181,7 +181,7 @@ public class FormTipoProdutoView extends javax.swing.JFrame {
         }
     }
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
